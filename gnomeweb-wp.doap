@@ -14,15 +14,9 @@
 
   <maintainer>
     <foaf:Person>
-      <foaf:name>Jeff Waugh</foaf:name>
-      <foaf:mbox rdf:resource="mailto:jdub@perkypants.org" />
-      <gnome:userid>jdub</gnome:userid>
-    </foaf:Person>
-  </maintainer>
-  <maintainer>
-    <foaf:Person>
-      <foaf:name>Glynn Foster</foaf:name>
-      <gnome:userid>gman</gnome:userid>
+      <foaf:name>Paul Cutler</foaf:name>
+      <foaf:mbox rdf:resource="mailto:pcutler@gnome.org" />
+      <gnome:userid>pcutler</gnome:userid>
     </foaf:Person>
   </maintainer>
 </Project>
