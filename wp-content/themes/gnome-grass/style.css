@@ -1,0 +1,624 @@
+/*
+Theme Name: GNOME Grass
+Theme URI: http://gnome.org/
+Author: Vinicius Depizzol <vdepizzol@gmail.com>
+Description: The original theme for the GNOME Project website.
+
+*/
+
+
+@import url("reset.css");
+@import url("text.css");
+@import url("960.css");
+
+/* Base information */
+/* ========================================================================== */
+
+html {
+    background: white url("images/waterbrush-body-bg.jpg") top center no-repeat;
+}
+body {
+    
+}
+a {
+    color: #204a87;
+}
+a:hover {
+    color: #3465a4;
+}
+a:visited {
+   color: #5d396e;
+}
+.left {
+    float: left;
+}
+.right {
+    float: right;
+}
+
+
+
+/* Accessibility access */
+/* ========================================================================== */
+
+
+
+#accessibility_access {
+    position: absolute;
+    left: 0;
+    /* Not visible by default? */
+    top: -200px;
+}
+
+
+
+/* Header */
+/* ========================================================================== */
+
+
+
+#header {
+    margin: 20px auto 0;
+}
+#header img {
+    vertical-align: middle;
+    float: left;
+    margin-right: 10px;
+}
+#header #logo {
+   float: left;
+}
+#header #logo h1 {
+    margin: 0;
+}
+#header #logo img {
+   -webkit-transition-duration: 200ms;
+   opacity: 1;
+   margin-left: -3px;
+   height: 76px;
+   width: 199px;
+}
+#header #logo img:hover {
+   opacity: 0.85;
+}
+
+
+
+/* Top bar */
+/* ========================================================================== */
+
+
+
+#top_bar {
+    background: #2e3436 url("images/top_bar-bg.png") top repeat-x;
+    padding: 8px 0;
+    margin-top: 23px;
+    font-size: 13px;
+    line-height: normal;
+    -moz-border-radius: 6px;
+    -webkit-border-radius: 6px;
+    border-radius: 6px;
+    -moz-box-shadow: 0 1px 8px #b9bec4;
+    -webkit-box-shadow: 0 1px 8px #b9bec4;
+    box-shadow: 0 1px 8px #b9bec4;
+}
+#top_bar ul {
+    list-style: none;
+    margin: 0;
+    padding: 0 5px;
+}
+#top_bar ul li {
+    display: inline;
+    margin: 0 5px 0 0;
+}
+#top_bar a {
+    color: #fff;
+    text-decoration: none;
+    padding: 4px 8px;
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+    border-radius: 4px;
+    outline: 0;
+    -webkit-transition-duration: 200ms;
+    text-shadow: 0 1px 0 #000;
+}
+#top_bar a:hover {
+    background: #64696d;
+}
+#top_bar a:focus {
+    background: #2e3436 url("images/top_bar-bg.png") bottom repeat-x;
+}
+#top_bar a:active, #top_bar li.current-menu-item a, #top_bar li.current-page-ancestor a {
+    background: #1c2021 url("images/top_bar-item-bg.png") top repeat-x;
+    -moz-box-shadow: inset 0 -1px 0 rgba(100%,100%,100%, 0.4), inset 0 1px 3px rgba(0,0,0,0.4);
+    -webkit-box-shadow: inset 0 -1px 0 rgba(100%,100%,100%, 0.4), inset 0 1px 3px rgba(0,0,0,0.4);
+    box-shadow: inset 0 -1px 0 rgba(100%,100%,100%, 0.4), inset 0 1px 3px rgba(0,0,0,0.4);
+}
+#top_bar li.selected a {
+    font-weight: bold;
+}
+#top_bar li a span.home {
+    background: url("images/top_bar-item-home.png") no-repeat;
+    padding-left: 18px;
+}
+#top_bar #main_search {
+    text-align: right;
+}
+#top_bar input {
+    margin: -8px 0 -8px -8px;
+    line-height: 22px;
+    width: 150px;
+    border: 0;
+    font: inherit;
+    color: inherit;
+    padding: 8px 8px 8px 28px;
+    background: transparent url(images/search-icon.png) 8px center no-repeat;
+    color: #fff;
+    border-left: 1px solid rgba(100%,100%,100%,0.3);
+    outline: none;
+}
+#top_bar input.placeholder {
+    color: #CCC;
+}
+#top_bar input:focus {
+    background-color: rgba(100%,100%,100%,0.1);
+    -moz-border-radius-topright: 5px;
+    -moz-border-radius-bottomright: 5px;
+    -webkit-border-top-right-radius: 6px;
+    -webkit-border-bottom-right-radius: 6px;
+    border-top-right-radius: 6px;
+    border-bottom-right-radius: 6px;
+}
+
+
+/* Page Title */
+/* ========================================================================== */
+
+
+
+.page_title {
+   margin: 10px 10px 20px;
+   border-bottom: 1px solid #9fb1c3;
+}
+.page_title h1 {
+    margin: 0;
+    font-size: 42px;
+    color: #6cc23d;
+    text-shadow: 0 1px 0 #fff;
+}
+
+/* -> subpages list */
+
+.page_title .subpages_list {
+   list-style: none;
+   clear: left;
+   margin: 0;
+   padding-bottom: 4px;
+   display: table-cell;
+   text-align: right;
+   white-space: nowrap;
+   vertical-align: bottom;
+}
+.page_title .subpages_list li {
+   display: inline;
+   padding: 0;
+   margin: 0 0 0 0.5em;
+}
+.page_title .subpages_list li a {
+   color: inherit;
+   text-decoration: none;
+   padding: 3px 6px;
+}
+.page_title .subpages_list li a:hover {
+   outline: 0;
+   background: red;
+   background: #dde5ef url(images/focus-bg.png) top repeat-x;
+   border: 1px solid #bbc5d5;
+   padding: 2px 5px;
+   -moz-border-radius: 4px;
+   -webkit-border-radius: 4px;
+   border-radius: 4px;
+}
+.page_title .subpages_list li a.active,
+.page_title .subpages_list li a.navTreeCurrentItem {
+   font-weight: bold;
+}
+
+
+/* Presentation banner */
+
+#home_banner {
+    width: 940px;
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #ececec;
+    display: block;
+}
+#home_banner img {
+    display: block;
+    margin: 0 auto;
+}
+
+
+
+/* Container */
+/* ========================================================================== */
+
+
+
+#container {
+    padding-top: 20px;
+    color: #555;
+    width: 960px;
+    margin: auto;
+    min-height: 240px;
+}
+#container .page_title, #container .content, #container .sidebar {
+   display: inline;
+   float: left;
+   margin-left: 10px;
+   margin-right: 10px;
+}
+#container .content, #container .page_title {
+   width: 940px;
+}
+#container.two_columns .content {
+   width: 700px;
+}
+#container.two_columns .content.without_sidebar {
+    width: 940px;
+}
+#container.two_columns .sidebar {
+   width: 220px;
+}
+
+/* (...) */
+
+
+
+/* Content specs */
+/* ========================================================================== */
+
+
+/*
+ * -> Call to Action boxes
+ *
+ *
+ */
+
+.action_box {
+   background: #fffae5 url(images/action_box-bg.png) repeat-x bottom;
+   -moz-box-shadow: 0 1px 2px #e5d693, inset 0 1px rgba(100%, 100%, 100%, 0.4);
+   -webkit-box-shadow: 0 1px 2px #e5d693, inset 0 1px rgba(100%, 100%, 100%, 0.4);
+   box-shadow: 0 1px 2px #e5d693, inset 0 1px rgba(100%, 100%, 100%, 0.4);
+   padding: 10px;
+   -moz-border-radius: 5px;
+   -webkit-border-radius: 5px;
+   border-radius: 5px;
+   border: 1px solid #e7d172;
+}
+
+
+/*
+ * -> Subtle boxes
+ *
+ * .subtle_box can be used inside grid classes to make simple box delimiters
+ * (without grids inside of it) or as a child of container class to allow columns on it
+ *
+ * Examples:
+ *
+ * <div class="grid_3">
+ *     <div class="subtle_box">Lorem ipsum dolor sit amet</div>
+ * </div>
+ *
+ * <div class="container_12">
+ *     <div class="subtle_box">
+ *         <div class="grid_3 alpha">(...)</div>
+ *         <div class="grid_9 omega">(...)</div>
+ *     </div>
+ * </div>
+ *
+ */
+
+.subtle_box {
+    margin: 0 0 20px;
+    padding: 9px;
+    background: #fff;
+    border: 1px solid #d3d7cf;
+    border-color: rgba(0,0,0,0.15);
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    -moz-box-shadow: 0 1px 5px rgba(0,0,0,0.1);
+    -webkit-box-shadow: 0 1px 5px rgba(0,0,0,0.1);
+    box-shadow: 0 1px 5px rgba(0,0,0,0.1);
+}
+
+/*
+ * --> Navigation list
+ *
+ * Navigation lists are used to generate a list of links which are in the same
+ * hierarchical level of the current page. Use it in a grid_3 element.
+ *
+ * Don't forget to highlight with <li class="current_page_item"> the current page.
+ *
+ */
+
+.navigation_list {
+    background: #fff;
+    margin: 0 0 20px;
+    padding: 0;
+    border: 1px solid #d3d7cf;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    -moz-border-radius: 6px;
+    -webkit-border-radius: 6px;
+    border-radius: 6px;
+    list-style: none;
+    font-size: small;
+    -moz-box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3), inset 0 1px 2px #fff;
+    -webkit-box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3), inset 0 1px 2px #fff;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3), inset 0 1px 2px #fff;
+}
+.navigation_list > li {
+    margin: 0;
+    background: #f5f5f4;
+    border: 1px solid #fff;
+    border-bottom-color: #d3d7cf;
+}
+.navigation_list > li.current_page_item,
+.navigation_list > li a.navTreeCurrentItem {
+   background: #dde5ef url(images/focus-bg.png) top repeat-x;
+}
+.navigation_list li:first-child {
+   -moz-border-radius-topleft: 5px;
+   -moz-border-radius-topright: 5px;
+   -webkit-border-top-left-radius: 5px;
+   -webkit-border-top-right-radius: 5px;
+   border-top-left-radius: 5px;
+   border-top-right-radius: 5px;
+}
+.navigation_list li:last-child {
+   border-bottom: 0;
+}
+.navigation_list li:last-child {
+   -moz-border-radius-bottomleft: 5px;
+   -moz-border-radius-bottomright: 5px;
+   -webkit-border-bottom-left-radius: 5px;
+   -webkit-border-bottom-right-radius: 5px;
+   border-bottom-left-radius: 5px;
+   border-bottom-right-radius: 5px;
+}
+.navigation_list a {
+    padding: 6px 9px;
+    color: inherit;
+    text-decoration: none;
+    font-weight: bold;
+    display: block;
+    text-shadow:  white 0 1px 0;
+}
+.navigation_list a.without_icon {
+   padding-left: 37px;
+}
+.navigation_list a:hover {
+    color: #3465a4;
+    background: rgba(100%,100%,100%,0.5);
+    /*-webkit-transition: all 200ms linear;*/
+}
+.navigation_list a:focus {
+   background: #dde5ef url(images/focus-bg.png) top repeat-x;
+   outline: 0;
+   padding: 2px 5px;
+   margin: 3px;
+   border: 1px solid #bbc5d5;
+   -moz-border-radius: 4px;
+   -webkit-border-radius: 4px;
+   border-radius: 4px;
+}
+.navigation_list a.without_icon:focus {
+   padding-left: 33px;
+}
+.navigation_list a img {
+    vertical-align: middle;
+    margin-right: 6px;
+}
+.navigation_list > li ul {
+    background: #fff;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+.navigation_list > li ul li {
+    border-top: 1px solid #ececec;
+    margin: 0;
+    padding: 0;
+}
+.navigation_list > li ul li:first-child {
+   border-top: 0;
+}
+.navigation_list > li ul li a {
+    font-weight: normal;
+    padding: 4px 9px;
+    color: #555753;
+}
+.navigation_list > li ul li.current_page_item a {
+    font-weight: bold;
+}
+.navigation_list > li ul li a:focus {
+   padding: 0 5px;
+}
+.navigation_list > li ul  {
+   padding-top: 1px;
+}
+
+/* -> Iconified Menu */
+
+ul.iconified_menu {
+   list-style: none;
+   margin: 0 0 20px;
+   font-size: small;
+}
+ul.iconified_menu li {
+   margin: 0 0 5px;
+}
+ul.iconified_menu li a {
+   padding: 5px;
+   display: block;
+   text-decoration: none;
+   border: 1px solid transparent;
+   overflow: hidden;
+   -moz-border-radius: 5px;
+   -webkit-border-radius: 5px;
+   border-radius: 5px;
+}
+ul.iconified_menu li a:hover, ul.iconified_menu li a:focus {
+   background: #dde5ef url(images/focus-bg.png) top repeat-x;
+   outline: 0;
+   border: 1px solid #bbc5d5;
+}
+ul.iconified_menu li a img {
+   float: left;
+   margin-right: 5px;
+}
+
+/* -> Definition Lists */
+
+dl dt {
+    font-weight: 700;
+}
+dl dt a {
+    color: inherit;
+}
+dl dt a:visited {
+    color: #ef8e4f;
+}
+
+/* -> Definition Lists with icons */
+
+/* Icons are defined as 48x48 pixels by default */
+
+dl.icon_list dt, dl.icon_list dd {
+   margin-left: 58px;
+}
+dl.icon_list dt img {
+   float: left;
+   width: 48px;
+   height: 48px;
+   margin: 0 10px 0 -58px;
+}
+
+/*
+ * --> News list
+ *
+ * This is initially used in the home page for displaying the news
+ *
+ */
+
+.news_list {
+
+}
+.news_list .news {
+    margin-bottom: 20px;
+}
+.news_list .news .date {
+    text-align: right;
+    font-family: 'Droid Serif', Georgia, serif;
+    color: #888a85;
+    margin-top: 0.1em;
+}
+.news_list .news a {
+    color: #555753;
+    display: block;
+    text-decoration: none;
+}
+.news_list .news a strong {
+    font-size: 18px;
+    color: #000;
+    line-height: 1.5;
+}
+.news_list .news a:hover strong {
+    text-decoration: underline;
+}
+
+
+/* Footer Artwork */
+/* ========================================================================== */
+
+
+
+#footer_art {
+    background: transparent no-repeat;
+    height: 180px;
+    margin-top: 0;
+    clear: left;
+    margin-bottom: -33px;-webkit-transition: all 200ms linear;
+}
+#footer_art.none {
+    height: 30px;
+    margin-top: 0;
+}
+
+
+/* Footer */
+/* ========================================================================== */
+
+
+
+#footer {
+    clear: left;
+    background: #d3d7cf url(images/grass.png) top center repeat-x;
+    color: #555753;
+    padding: 60px 0 20px 0;
+}
+#footer div.links div {
+    float: left;
+    margin-right: 20px;
+}
+#footer div.links.right div {
+    float: right;
+    text-align: right;
+}
+#footer div.links div a, #footer div.links div strong {
+    display: block;
+    text-decoration: none;
+}
+#footer div.links div a:hover, #footer div.links div a:focus {
+    text-decoration: underline;
+}
+#footer ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+#footer ul li {
+    margin: 0;
+    padding: 0;
+}
+#footer ul.menu > li > a {
+    font-weight: bold;
+}
+#footer a {
+    color: inherit;
+    background: #d3d7cf;
+    -webkit-transition: background-color 100ms ease-in;
+}
+#footer a.lang_sel_sel {
+    background: url(images/selected-language.png) no-repeat right center;
+    margin-right: -10px;
+    padding-right: 10px;
+}
+#footer a:focus {
+   background: #ececec;
+   padding: 1px 3px;
+   margin: -1px -3px;
+   text-decoration: none !important;
+   outline: 0;
+   -moz-border-radius: 5px;
+   -webkit-border-radius: 5px;
+   border-radius: 5px;
+}
+#footer #footnotes {
+    margin-top: 20px;
+}
+#footer #footnotes small {
+    font-size: 80%;
+}
