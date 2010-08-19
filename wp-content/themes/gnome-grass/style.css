@@ -601,7 +601,7 @@ dl.icon_list dt img {
     background: #d3d7cf;
     -webkit-transition: background-color 100ms ease-in;
 }
-#footer a.lang_sel_sel {
+#footer .available_languages li.active {
     background: url(images/selected-language.png) no-repeat right center;
     margin-right: -10px;
     padding-right: 10px;

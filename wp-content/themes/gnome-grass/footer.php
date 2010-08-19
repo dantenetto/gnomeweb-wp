@@ -22,7 +22,37 @@
                 </div>
                 */ ?>
                 <?php
-                $sitepress->language_selector();
+                
+                if(function_exists('icl_get_languages')) {
+                
+                    $languages = icl_get_languages('skip_missing=0&orderby=code');
+                    
+                    echo '<div><ul class="menu available_languages">';
+                    
+                    if(count($languages) > 0) {
+                        echo '<li><strong>';
+                        echo _e('Also available in:', 'grass');
+                        echo '</strong><ul class="sub-menu">';
+                    }
+                    
+                    foreach($languages as $key => $value) {
+                        if($value['active'] == true) {
+                            echo '<li class="active"><a href="'.$value['url'].'" title="'.$value['translated_name'].'">'.$value['native_name'].'</a></li>';
+                        } else {
+                            echo '<li><a href="'.$value['url'].'" title="'.$value['translated_name'].'">'.$value['native_name'].'</a></li>';
+                        }
+                    }
+                    
+                    echo '</ul></li></ul></div>';
+                    
+                    /*
+                     * If the number of available languages get bigger,
+                     * we'll have to put a "more..." link here.
+                     *
+                     */
+                    
+                }
+                
                 ?>
             </div>
             
