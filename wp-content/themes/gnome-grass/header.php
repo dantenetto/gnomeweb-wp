@@ -24,7 +24,7 @@
     <!-- header -->
     <div id="header" class="container_12">
         <div id="logo" class="grid_3">
-            <h1><a href="<?php bloginfo('url'); ?>/"><img src="<?php bloginfo('stylesheet_directory'); ?>/images/gnome-logo.png" alt="GNOME" /></a></h1>
+            <h1><a title="<?php _e( 'Go to home page', 'grass' ); ?>" href="<?php bloginfo('url'); ?>/"><img src="<?php bloginfo('stylesheet_directory'); ?>/images/gnome-logo.png" alt="<?php echo _e('GNOME: The Free Software Desktop Project', 'grass');?>" /></a></h1>
         </div>
         <div id="top_bar" class="grid_9">
             <div class="left">
