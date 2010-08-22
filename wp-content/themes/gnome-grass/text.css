@@ -3,7 +3,7 @@
 
 
 body {
-    font-family: 'Droid Sans', 'DejaVu Sans', Verdana, sans-serif;
+    font-family: 'Droid Sans', 'DejaVu Sans', 'Lucida Grande', 'Lucida Sans Unicode', Verdana, sans-serif;
     font-size: 14px;
     line-height: 1.7em;
     color: #2e3436;
@@ -15,7 +15,7 @@ hr {
     height: 0;
 }
 h1, h2, h3, h4, h5, h6, dt {
-    font-family: 'Droid Serif', Georgia, serif;
+    font-family: 'Droid Serif', 'DejaVu Serif', Cambria, Georgia, serif;
     color: #3465a4;
     font-weight: 500;
     line-height: normal;
@@ -72,7 +72,7 @@ p, dd, .action_box, ul, ol {
 
 .main_feature {
     font-size: 18pt;
-    font-family: 'Droid Serif', Georgia, serif;
+    font-family: 'Droid Serif', 'DejaVu Serif', Cambria, Georgia, serif;
     line-height: 130%;  
 }
 
@@ -82,6 +82,6 @@ p, dd, .action_box, ul, ol {
 }
 
 #footer {
-    font-size: 12px;
+    font-size: 11px;
     line-height: 1.5em;
 }

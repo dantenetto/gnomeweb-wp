@@ -57,8 +57,8 @@
             </div>
             
             <div id="footnotes" class="grid_9">
-                Copyright © 2005‒2010 <strong class="gnome_logo"><?php _e( 'The GNOME Project', 'grass' ); ?></strong><br />
-                <small><?php _e( 'Optimised for standards', 'grass' ); ?>. <?php _e( 'Hosted by', 'grass' ); ?> <a href="#">Red Hat</a>.</small>
+                <?php _e( 'Copyright', 'grass' ); ?> © 2005‒2010 <strong class="gnome_logo"><?php _e( 'The GNOME Project', 'grass' ); ?></strong><br />
+                <small><?php _e( 'Optimised for standards', 'grass' ); ?>. <?php _e( 'Hosted by', 'grass' ); ?> <a href="http://redhat.com">Red Hat</a>.</small>
             </div>
             
             <div class="clear"></div>
