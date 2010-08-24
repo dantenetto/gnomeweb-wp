@@ -1,8 +1,5 @@
 The small TODO list of the <em>grass</em> template for gnome.org:
 
 - Finish the home page with sane content.
-
-- Remove including language-selector.css from WPML plugin on every page.
-  We don't need that.
   
 - Proper specific page for displaying news posts
