@@ -1,15 +1,19 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<!-- Good morning, GNOME -->
 <head>
-	<meta http-equiv="Content-Type" content="<?php bloginfo('html_type'); ?>; charset=<?php bloginfo('charset'); ?>" />
-    <title><?php wp_title('&laquo;', true, 'right'); ?> <?php bloginfo('name'); ?></title>
-    <link rel="stylesheet" type="text/css" media="all" href="<?php bloginfo('stylesheet_url'); ?>" />
-    <link rel="icon" type="image/png" href="<?php bloginfo('stylesheet_directory'); ?>/images/favicon.png" />
-	<link rel="pingback" href="<?php bloginfo('pingback_url'); ?>" />
-	<script type="text/javascript" src="<?php bloginfo('stylesheet_directory'); ?>/js/jquery-1.4.2.min.js"></script>
-	<script type="text/javascript" src="<?php bloginfo('stylesheet_directory'); ?>/js/template.js"></script>
-	<?php wp_head(); ?>
+<meta http-equiv="Content-Type" content="<?php bloginfo('html_type'); ?>; charset=<?php bloginfo('charset'); ?>" />
+<title><?php wp_title('-', true, 'right'); ?> <?php bloginfo('name'); ?></title>
+<link rel="stylesheet" type="text/css" media="all" href="<?php bloginfo('stylesheet_url'); ?>" />
+<link rel="icon" type="image/png" href="<?php bloginfo('stylesheet_directory'); ?>/images/favicon.png" />
+<link rel="pingback" href="<?php bloginfo('pingback_url'); ?>" />
+<script type="text/javascript" src="<?php bloginfo('stylesheet_directory'); ?>/js/jquery-1.4.2.min.js"></script>
+<script type="text/javascript" src="<?php bloginfo('stylesheet_directory'); ?>/js/template.js"></script>
+<?php wp_head(); ?>
 </head>
+
+
 <body>
 
     <!-- accessibility access -->
@@ -17,7 +21,7 @@
         <ul>
             <li><a href="#container"><?php _e( 'Go to page content', 'grass' ); ?></a></li>
             <li><a href="#top_bar"><?php _e( 'Go to main menu', 'grass' ); ?></a></li>
-            <li><a href="#search"><?php _e( 'Go to the search field', 'grass' ); ?></a></li>
+            <li><a href="#s" onclick="$('#s').focus(); return false;"><?php _e( 'Go to the search field', 'grass' ); ?></a></li>
         </ul>
     </div>
     
@@ -41,7 +45,7 @@
             <div class="right">
                 <form role="search" method="get" id="searchform" action="<?php bloginfo('url'); ?>/" >
                     <div>
-                        <input type="text" value="<?php if(isset($_GET['s'])) { echo htmlentities(strip_tags($_GET['s'])); } ?>" name="s" id="s" placeholder="<?php _e( 'Search', 'grass' ); ?>" />
+                        <label class="hidden" for="s"><?php _e( 'Search', 'grass' ); ?>: </label><input type="text" value="<?php if(isset($_GET['s'])) { echo htmlentities(strip_tags($_GET['s'])); } ?>" name="s" id="s" placeholder="<?php _e( 'Search', 'grass' ); ?>" />
                     </div>
                 </form>
             </div>

@@ -1,3 +1,4 @@
+    <!-- footer -->
     <div id="footer">
         <div class="container_12">
             <div class="links grid_9">
@@ -56,6 +57,7 @@
                 ?>
             </div>
             
+            <!-- footnotes -->
             <div id="footnotes" class="grid_9">
                 <?php _e( 'Copyright', 'grass' ); ?> © 2005‒2010 <strong class="gnome_logo"><?php _e( 'The GNOME Project', 'grass' ); ?></strong><br />
                 <small><?php _e( 'Optimised for standards', 'grass' ); ?>. <?php _e( 'Hosted by', 'grass' ); ?> <a href="http://redhat.com">Red Hat</a>.</small>
