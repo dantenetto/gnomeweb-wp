@@ -15,7 +15,7 @@ Description: The original theme for the GNOME Project website.
 /* ========================================================================== */
 
 html {
-    background: white url("images/waterbrush-body-bg.jpg") top center no-repeat;
+    background: white url("images/waterbrush-body-bg.jpg") top center repeat-x;
 }
 body {
     

@@ -158,6 +158,7 @@ class SitePress{
             /* preWP3 compatibility  - start */
             if(ICL_PRE_WP3){            
                 add_action('admin_print_scripts-edit-pages.php', array($this,'restrict_manage_pages'));
+
             }
             /* preWP3 compatibility  - endif */
             
@@ -4540,12 +4541,12 @@ class SitePress{
     }
     
     function _allow_calling_template_file_directly(){
-        if(is_404()){  
+        if(is_404()){
             global $wp_query, $wpdb;
-            $wp_query->is_404 = false;
             $parts = parse_url(get_bloginfo('home'));
             $req = str_replace($parts['path'], '', $_SERVER['REQUEST_URI']);
             if(file_exists(ABSPATH . $req) && !is_dir(ABSPATH . $req)){
+                $wp_query->is_404 = false;
                 header('HTTP/1.1 200 OK');
                 include ABSPATH . $req;
                 exit;

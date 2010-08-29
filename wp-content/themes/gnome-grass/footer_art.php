@@ -1,11 +1,13 @@
             <!-- footer artwork -->
             <?php
             
-            $footer = get_post_meta($post->ID, 'footer_art');
-            if(count($footer) > 0) {
-                $footer_art = $footer[0];
-            } else {
-                $footer_art = 'default';
+            if(!isset($footer_art)) {
+                $footer = get_post_meta($post->ID, 'footer_art');
+                if(count($footer) > 0) {
+                    $footer_art = $footer[0];
+                } else {
+                    $footer_art = 'default';
+                }
             }
             
             ?>

@@ -13,6 +13,7 @@ hr {
     border-top-width: 1px;
     clear: both;
     height: 0;
+    margin: 20px 0;
 }
 h1, h2, h3, h4, h5, h6, dt {
     font-family: 'Droid Serif', 'DejaVu Serif', Cambria, Georgia, serif;
@@ -55,7 +56,7 @@ ul {
 li {
     margin-left:30px;
 }
-dl,dt,hr,h1,h2,h3,h4,h5,h6,pre,table,address,fieldset {
+dl,dt,h1,h2,h3,h4,h5,h6,pre,table,address,fieldset {
     margin: 0.8em 0 0.4em;
 }
 p, dd, .action_box, ul, ol {
