@@ -20,12 +20,26 @@ require_once("header.php"); ?>
                         <hr />
                         
                         <div class="grid_5 alpha">
-                            <p><?php _e( 'For now, you may want to go to the home page to start from beginning or try your luck in the search form bellow.', 'grass'); ?></p>
+                            <p><?php
+                            
+                            printf(
+                                __( 'For now, you may want to go to the <a href="%1$s">home page</a> to start from beginning or try your luck in the search form bellow.', 'grass'),
+                                get_bloginfo('url')
+                            );
+                            
+                            ?></p>
                             <?php get_search_form(); ?>
                         </div>
                         
                         <div class="grid_5 omega">
-                            <p>If you think there is a bug in some link around GNOME website, please, we ask you to <a href="https://bugzilla.gnome.org/enter_bug.cgi?product=website&component=www.gnome.org">report a bug</a>. Thank you.</p>
+                            <p><?php
+                            
+                            printf(
+                                __('If you think there is a bug in some link around GNOME website, please, we ask you to <a href="%1$s">report a bug</a>. Thank you.', 'grass'),
+                                'https://bugzilla.gnome.org/enter_bug.cgi?product=website&component=www.gnome.org'
+                            );
+                            
+                            ?></p>
                         </div>
                 </div>
                 
