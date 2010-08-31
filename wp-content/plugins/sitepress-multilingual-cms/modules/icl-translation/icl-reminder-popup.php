@@ -27,7 +27,7 @@
             $user['platform_kind'] = 2;
             $user['cms_kind'] = 1;
             $user['blogid'] = $wpdb->blogid?$wpdb->blogid:1;
-            $user['url'] = get_option('home');
+            $user['url'] = get_option('siteurl');
             $user['title'] = get_option('blogname');
             $user['description'] = $this->settings['icl_site_description'];
             $user['is_verified'] = 1;                
@@ -59,7 +59,9 @@
                 $this->save_settings($iclsettings);
             }else{
                 echo '<p class="error" style="padding-left:8px;">';
-                printf(__('WPML did not manage to access the server at ICanLocalize. Please <a%s>contact us</a> for support.', 'sitepress'), ' target="_blank" href="http://www.icanlocalize.com/site/about-us/contact-us/"');
+                printf(__('WPML did not manage to access the server at ICanLocalize. Please <a%s>contact us</a> for support. <br />Show <a%s>debug information</a>.', 'sitepress'), 
+                    ' target="_blank" href="http://www.icanlocalize.com/site/about-us/contact-us/"', 
+                    ' a href="admin.php?page='.ICL_PLUGIN_FOLDER.'/menu/troubleshooting.php&icl_action=icl-connection-test&data='.base64_encode(serialize($user)).'#icl-connection-test"');
                 echo '</p>';
                 exit;
             }
@@ -145,5 +147,6 @@
     <br />
     <br />
 <?php endif; ?>
-<iframe src="<?php echo $target;?>" style="width:95%; height:90%" onload="<?php if($auto_resize):?>jQuery('#TB_window').css('width','90%').css('margin-left', '-45%');<?php endif; ?><?php if($unload_cb):?>jQuery('#TB_window').bind('unload', <?php echo $unload_cb ?>);<?php endif; ?>">
+<?php if(false !== strpos($_SERVER['HTTP_REFERER'], 'content-translation.php')) $ifrwidth='100%'; else $ifrwidth='98%'; ?>
+<iframe src="<?php echo $target;?>" style="width:<?php echo $ifrwidth ?>; height:92%" onload="<?php if($auto_resize):?>jQuery('#TB_window').css('width','90%').css('margin-left', '-45%');<?php endif; ?><?php if($unload_cb):?>jQuery('#TB_window').unbind('unload').bind('unload', <?php echo $unload_cb ?>);<?php endif; ?>">
 

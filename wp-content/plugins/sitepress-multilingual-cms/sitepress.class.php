@@ -93,7 +93,6 @@ class SitePress{
             }
             
             
-            //add_filter('wp_list_pages_excludes', array($this, 'exclude_other_language_pages'));
             add_filter('get_pages', array($this, 'exclude_other_language_pages2'));
             add_filter('wp_dropdown_pages', array($this, 'wp_dropdown_pages'));
             
@@ -158,7 +157,6 @@ class SitePress{
             /* preWP3 compatibility  - start */
             if(ICL_PRE_WP3){            
                 add_action('admin_print_scripts-edit-pages.php', array($this,'restrict_manage_pages'));
-
             }
             /* preWP3 compatibility  - endif */
             
@@ -644,6 +642,10 @@ class SitePress{
                         'manage_options', basename(ICL_PLUGIN_PATH).'/menu/content-translation.php');                                                     
             }
 			add_submenu_page(basename(ICL_PLUGIN_PATH).'/menu/languages.php', __('Support','sitepress'), __('Support','sitepress'), 'manage_options', basename(ICL_PLUGIN_PATH).'/menu/support.php');
+            if($_GET['page'] == basename(ICL_PLUGIN_PATH).'/menu/troubleshooting.php'){
+                add_submenu_page(basename(ICL_PLUGIN_PATH).'/menu/languages.php', __('Troubleshooting','sitepress'), __('Troubleshooting','sitepress'), 
+                            'manage_options', basename(ICL_PLUGIN_PATH).'/menu/troubleshooting.php'); 
+            }                        
 
         }else{
             
@@ -1124,10 +1126,12 @@ class SitePress{
                         
                     } else if (!$lang['applications']) {
                         // No translators have applied for this language pair.                        
+                        $popargs['class'] = 'icl_hot_link';
                         $response = ' | ' . $this->create_icl_popup_link("@select-translators;{$from_lang};{$to_lang}@", $popargs) .
                                     __('Select translators', 'sitepress') .  '</a>';
                     } else if (!$lang['have_translators']) {
                         // translators have applied but none selected yet
+                        $popargs['class'] = 'icl_hot_link';
                         $response = ' | ' . $this->create_icl_popup_link("@select-translators;{$from_lang};{$to_lang}@", $popargs) . __('Select translators', 'sitepress') . '</a>';
                     } else {
                         // there are translators ready to translate
@@ -1149,7 +1153,7 @@ class SitePress{
             }
                                        
         }
-        
+        $popargs['class'] = 'icl_hot_link';
         $response = ' | ' . $this->create_icl_popup_link("@select-translators;{$from_lang};{$to_lang}@", $popargs) . __('Select translators', 'sitepress') .  '</a>';
         
         // no status found        
@@ -1265,7 +1269,7 @@ class SitePress{
 			$id = ' id="' . $id . '"';
 		}
 		if ($title) {
-            return '<a class="icl_thickbox' . $class . '" title="' . $title . '" href="admin.php?page='.ICL_PLUGIN_FOLDER . 
+            return '<a class="icl_thickbox ' . $class . '" title="' . $title . '" href="admin.php?page='.ICL_PLUGIN_FOLDER . 
                 "/menu/languages.php&amp;icl_action=reminder_popup{$auto_resize}{$unload_cb}&amp;target=" . urlencode($link) .'"' . $id . '>';
         } else {
             return '<a class="icl_thickbox' . $class . '" href="admin.php?page='.ICL_PLUGIN_FOLDER . 
@@ -2427,10 +2431,6 @@ class SitePress{
             //$cond = '';
             $ljoin = "LEFT";
         }
-        //$join .= " {$ljoin} JOIN {$wpdb->prefix}icl_translations t ON {$wpdb->posts}.ID = t.element_id 
-        //            AND t.element_type='post' {$cond} JOIN {$wpdb->prefix}icl_languages l ON t.language_code=l.code AND l.active=1";        
-        
-        //$post_type = get_query_var('post_type');        
         
         // determine post type
         $db = debug_backtrace();
@@ -2610,19 +2610,7 @@ class SitePress{
         </script>
         <?php
     }
-    
-    /*
-    function exclude_other_language_pages($s){
-        global $wpdb;
-        $excl_pages = $wpdb->get_col("
-            SELECT p.ID FROM {$wpdb->posts} p 
-            LEFT JOIN {$wpdb->prefix}icl_translations t ON (p.ID = t.element_id OR t.element_id IS NULL)
-            WHERE t.element_type='post' AND p.post_type='page' AND t.language_code <> '{$wpdb->escape($this->this_lang)}'
-            ");
-        return array_merge($s, $excl_pages);
-    }
-    */
-    
+        
     function exclude_other_language_pages2($arr){
         global $wpdb;
         $filtered_pages = array();
@@ -3983,7 +3971,7 @@ class SitePress{
             }
             // category_name
             if(isset($q->query_vars['category_name']) && !empty($q->query_vars['category_name'])){
-                $cat = get_term_by( 'slug', basename($q->query_vars['category_name']), 'category' ); 
+                $cat = get_term_by( 'slug', preg_replace('#((.*)/)#','',$q->query_vars['category_name']), 'category' ); 
                 if(!$cat){
                     $cat = get_term_by( 'name', $q->query_vars['category_name'], 'category' ); 
                 }
@@ -4541,12 +4529,12 @@ class SitePress{
     }
     
     function _allow_calling_template_file_directly(){
-        if(is_404()){
+        if(is_404()){  
             global $wp_query, $wpdb;
+            $wp_query->is_404 = false;
             $parts = parse_url(get_bloginfo('home'));
             $req = str_replace($parts['path'], '', $_SERVER['REQUEST_URI']);
             if(file_exists(ABSPATH . $req) && !is_dir(ABSPATH . $req)){
-                $wp_query->is_404 = false;
                 header('HTTP/1.1 200 OK');
                 include ABSPATH . $req;
                 exit;
