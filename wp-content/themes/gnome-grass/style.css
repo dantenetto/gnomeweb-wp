@@ -586,6 +586,36 @@ dl.icon_list dt img {
 
 
 
+/* Page Navigation */
+/* ========================================================================== */
+
+
+
+.page_navigation {
+    margin: 30px auto 0;
+}
+.page_navigation .prev, .page_navigation .next {
+    height: 32px;
+    line-height: 32px;
+}
+.page_navigation .prev a {
+    float: left;
+    background: url(images/go-previous.png) top left no-repeat;
+    padding-left: 40px;
+}
+.page_navigation .next a {
+    float: right;
+    background: url(images/go-next.png) top right no-repeat;
+    padding-right: 40px;
+    text-decoration: none;
+    color: inherit;
+}
+.page_navigation .next a:hover {
+    text-decoration: underline;
+}
+
+
+
 /* Footer Artwork */
 /* ========================================================================== */
 

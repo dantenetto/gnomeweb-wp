@@ -21,6 +21,15 @@ require_once("header.php"); ?>
                     <dd><?php the_excerpt(); ?></dd>
                 <?php endwhile; // End the loop. Whew. ?>
                 </dl>
+                
+                <?php if (  $wp_query->max_num_pages > 1 ) : ?>
+                <div class="page_navigation">
+                    <span class="prev"><?php previous_posts_link(__('Previous page', 'grass')); ?></span>
+                    <span class="next"><?php next_posts_link(__('Next page', 'grass')); ?></span>
+                    <div class="clear"></div>
+                </div>
+                <?php endif; ?>
+                
                 <div class="clear"></div>
             </div>
             <?php $footer_art = 'search'; ?>
