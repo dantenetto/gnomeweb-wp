@@ -23,7 +23,7 @@ require_once("header.php"); ?>
                 </dl>
                 <div class="clear"></div>
             </div>
-            
+            <?php $footer_art = 'search'; ?>
             <?php require_once("footer_art.php"); ?>
         </div>
     </div>
