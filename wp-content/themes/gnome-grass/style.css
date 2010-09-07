@@ -598,6 +598,13 @@ dl.icon_list dt img {
     height: 32px;
     line-height: 32px;
 }
+.page_navigation a {
+    text-decoration: none;
+    color: inherit;
+}
+.page_navigation a:hover {
+    text-decoration: underline;
+}
 .page_navigation .prev a {
     float: left;
     background: url(images/go-previous.png) top left no-repeat;
@@ -607,11 +614,6 @@ dl.icon_list dt img {
     float: right;
     background: url(images/go-next.png) top right no-repeat;
     padding-right: 40px;
-    text-decoration: none;
-    color: inherit;
-}
-.page_navigation .next a:hover {
-    text-decoration: underline;
 }
 
 
