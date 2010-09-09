@@ -45,7 +45,7 @@
             <div class="right">
                 <form role="search" method="get" id="searchform" action="<?php bloginfo('url'); ?>/" >
                     <div>
-                        <label class="hidden" for="s"><?php _e( 'Search', 'grass' ); ?>: </label><input type="text" value="<?php if(isset($_GET['s'])) { echo htmlentities(strip_tags($_GET['s'])); } ?>" name="s" id="s" placeholder="<?php _e( 'Search', 'grass' ); ?>" />
+                        <label class="hidden" for="s"><?php _e( 'Search', 'grass' ); ?>: </label><input type="text" value="<?php if(isset($_GET['s'])) { echo htmlspecialchars(stripslashes(strip_tags($_GET['s']))); } ?>" name="s" id="s" placeholder="<?php _e( 'Search', 'grass' ); ?>" />
                     </div>
                 </form>
             </div>
