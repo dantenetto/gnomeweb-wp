@@ -1,6 +1,6 @@
 <?php
 /*
-Template Name: Single Column
+Template Name: One Column
 */
 
 require_once("header.php"); ?>
@@ -21,20 +21,7 @@ require_once("header.php"); ?>
                 <div class="clear"></div>
             </div>
             
-            <!-- footer artwork -->
-            <?php
-            
-            $footer = get_post_meta($post->ID, 'footer');
-            if(count($footer) > 0) {
-                $footer_art = $footer[0];
-            } else {
-                $footer_art = 'default';
-            }
-            
-            ?>
-            <div id="footer_art" class="grid_12 <?php echo $footer_art; ?>">
-                <?php print_r($post_meta[$post->ID]); ?>
-            </div>
+            <?php require_once("footer_art.php"); ?>
         </div>
     </div>
     

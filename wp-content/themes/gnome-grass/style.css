@@ -198,6 +198,13 @@ a:visited {
 .page_title h1 a:hover {
     text-decoration: underline;
 }
+.page_title.with_subpages_list {
+    display: table-row;
+}
+.page_title.with_subpages_list h1 {
+    display: table-cell;
+    width: 100%;
+}
 
 /* -> subpages list */
 
@@ -236,8 +243,7 @@ a:visited {
    -webkit-border-radius: 4px;
    border-radius: 4px;
 }
-.page_title .subpages_list li a.active,
-.page_title .subpages_list li a.navTreeCurrentItem {
+.page_title .subpages_list li.current_page_item a {
    font-weight: bold;
 }
 
@@ -549,6 +555,29 @@ dl.icon_list dt img {
    width: 48px;
    height: 48px;
    margin: 0 10px 0 -58px;
+}
+
+
+/* -> Action Button */
+
+
+.action_button {
+    display: inline-block;
+    padding: 3px 12px;
+    border: 1px solid #ccc;
+    background: #ececec url(images/action_button-bg.png) center repeat-x;
+    -moz-border-radius: 15px;
+    -webkit-border-radius: 15px;
+    color: #2e3436;
+    text-shadow: 0 1px 0 #fff;
+    text-decoration: none;
+    -webkit-transition: background-position 200ms linear;
+    -moz-box-shadow: inset 0 1px 0 #fff;
+    -webkit-box-shadow: inset 0 1px 0 #fff;
+}
+.action_button:hover {
+    background-position: top;
+    color: #000;
 }
 
 /*

@@ -1,7 +1,5 @@
 <?php
-/*
-Template Name: Single Column
-*/
+
 
 require_once("header.php"); ?>
 
