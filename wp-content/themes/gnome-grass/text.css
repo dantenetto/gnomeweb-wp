@@ -81,6 +81,9 @@ p, dd, .action_box, ul, ol {
     font-size: 11px;
     color: #888a85;
 }
+.footnotes a {
+    color: #888a85;
+}
 
 #footer {
     font-size: 11px;
