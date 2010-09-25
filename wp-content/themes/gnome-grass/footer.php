@@ -1,3 +1,8 @@
+    <!-- footer grass -->
+    <div id="footer_grass">
+        &nbsp;
+    </div>
+
     <!-- footer -->
     <div id="footer">
         <div class="container_12">

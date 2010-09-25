@@ -11,6 +11,10 @@
             }
             
             ?>
+            <?php if($footer_art == 'default' || $footer_art == 'none'): ?>
+            <div id="footer_art" class="grid_12 <?php echo $footer_art;?>">
+            <?php else: ?>
             <div id="footer_art" class="grid_12" style="background-image: url(<?php bloginfo('stylesheet_directory') ?>/images/footer_arts/<?php echo $footer_art;?>.png);">
-                <?php print_r($post_meta[$post->ID]); ?>
+            <?php endif; ?>
+                &nbsp;
             </div>

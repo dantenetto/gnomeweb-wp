@@ -65,7 +65,6 @@ require_once("header.php"); ?>
                 <div class="clear"></div>
             </div>
             
-            <!-- footer artwork -->
             <?php require_once("footer_art.php"); ?>
         </div>
     </div>

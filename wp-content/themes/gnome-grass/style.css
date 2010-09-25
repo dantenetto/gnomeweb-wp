@@ -580,6 +580,9 @@ dl.icon_list dt img {
     background-position: top;
     color: #000;
 }
+.action_button:visited {
+    color: inherit;
+}
 .action_button:active {
     -moz-box-shadow: inset 0 2px 3px rgba(0,0,0,0.4);
     -webkit-box-shadow: inset 0 2px 3px rgba(0,0,0,0.4);
@@ -664,13 +667,24 @@ dl.icon_list dt img {
     height: 180px;
     margin-top: 0;
     clear: left;
-    margin-bottom: -33px;
 }
 #footer_art.none {
     height: 30px;
     margin-top: 0;
 }
+#footer_art.default {
+    background-image: url(images/footer_arts/default.png);
+}
 
+
+/* Footer Grass */
+/* ========================================================================== */
+
+#footer_grass {
+    background: url(images/grass.png) top center repeat-x;
+    height: 39px;
+    margin-top: -33px;
+}
 
 
 /* Footer */
@@ -680,9 +694,10 @@ dl.icon_list dt img {
 
 #footer {
     clear: left;
-    background: #d3d7cf url(images/grass.png) top center repeat-x;
+    /*background: #d3d7cf url(images/grass.png) top center repeat-x;*/
+    background: #d3d7cf;
     color: #555753;
-    padding: 60px 0 20px 0;
+    padding: 20px 0;
 }
 #footer div.links div {
     float: left;
@@ -713,7 +728,6 @@ dl.icon_list dt img {
 }
 #footer a {
     color: inherit;
-    background: #d3d7cf;
     -webkit-transition: background-color 100ms ease-in;
 }
 #footer .available_languages li.active {
