@@ -55,6 +55,34 @@ a:visited {
 
 
 
+/* Global Domain Bar */
+/* ========================================================================== */
+
+
+
+#global_domain_bar {
+    background: #fff;
+    height: 10px;
+}
+#global_domain_bar div {
+    max-width: 940px;
+    margin: 0 auto;
+}
+#global_domain_bar a {
+    margin-right: 30px;
+    float: right;
+    background: #fff url(images/favicon.png) 8px 7px no-repeat;
+    padding: 4px 12px 2px 26px;
+    color: #555753;
+    text-decoration: none;
+    font-size: 13px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+}
+
+
+
 /* Header */
 /* ========================================================================== */
 
@@ -501,6 +529,27 @@ a:visited {
    padding-top: 1px;
 }
 
+/* -> Simple List */
+
+.simple_list {
+    margin: 0 0 20px;
+    padding: 0;
+    list-style: none;
+}
+.simple_list li {
+    border: 1px solid #eeeeec;
+    border-left: 0;
+    border-right: 0;
+    padding: 0;
+    margin: 0;
+}
+.simple_list li a {
+    padding: 3px 8px;
+    text-decoration: none;
+    display: block;
+    color: #888a85;
+}
+
 /* -> Iconified Menu */
 
 ul.iconified_menu {
@@ -563,7 +612,7 @@ dl.icon_list dt img {
 
 .action_button {
     display: inline-block;
-    padding: 3px 12px;
+    padding: 0 14px;
     border: 1px solid #ccc;
     background: #ececec url(images/action_button-bg.png) center repeat-x;
     -moz-border-radius: 15px;

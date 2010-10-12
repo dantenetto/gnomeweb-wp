@@ -25,6 +25,14 @@
         </ul>
     </div>
     
+    <!-- global gnome.org domain bar -->
+    <div id="global_domain_bar">
+        <div>
+            <a href="#"><strong>GNOME</strong>.ORG</a>
+        </div>
+    </div>
+    
+    
     <!-- header -->
     <div id="header" class="container_12">
         <div id="logo" class="grid_3">
