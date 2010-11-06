@@ -4,6 +4,8 @@
  * @subpackage Default_Theme
  */
 
+require_once ("database-export.php");
+
 add_editor_style("editor_style.css");
 
 add_theme_support('menus');
@@ -85,7 +87,17 @@ add_filter('gallery_style', create_function('$a', 'return preg_replace("%
 
 %s", "", $a);'));
 
+function update_pot_file ($post) {
+  $podir = ABSPATH . "po/";
+  $xml_file = "{$podir}.tmp.xml";
+  file_put_contents ($xml_file, generate_po_xml ());
 
+  $cmd = "/usr/bin/xml2po -o {$podir}gnome.org.pot $xml_file";
+  exec ($cmd);
+
+  unlink ($xml_file);
+}
+add_action ('post_updated', 'update_pot_file');
 
 
 ?>
