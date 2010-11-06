@@ -88,7 +88,7 @@ add_filter('gallery_style', create_function('$a', 'return preg_replace("%
 %s", "", $a);'));
 
 function update_pot_file ($post) {
-  $podir = ABSPATH . "po/";
+  $podir = WP_CONTENT_DIR . '/themes/gnome-grass/po/';
   $xml_file = "{$podir}.tmp.xml";
   file_put_contents ($xml_file, generate_po_xml ());
 
