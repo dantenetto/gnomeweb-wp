@@ -87,16 +87,18 @@ add_filter('gallery_style', create_function('$a', 'return preg_replace("%
 
 %s", "", $a);'));
 
+define (THEME_DIR, dirname (__FILE__));
+
 /* This action will be fired when a post/page is updated. It's used to
  * update (regenerate, actually) the pot file with all translatable
  * strings of the gnome.org website. */
-function update_pot_file ($post) {
-  $podir = WP_CONTENT_DIR . '/themes/gnome-grass/po/';
+function gs_update_pot_file ($post) {
+  $podir = THEME_DIR . '/po/';
   $xml_file = "{$podir}.tmp.xml";
-  file_put_contents ($xml_file, generate_po_xml ());
+  file_put_contents ($xml_file, gs_generate_po_xml ());
   exec ("/usr/bin/xml2po -o {$podir}gnome.org.pot $xml_file");
   unlink ($xml_file);
 }
-add_action ('post_updated', 'update_pot_file');
+add_action ('post_updated', 'gs_update_pot_file');
 
 ?>

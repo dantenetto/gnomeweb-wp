@@ -8,7 +8,7 @@
 
 require_once(ABSPATH . "wp-config.php");
 
-function generate_po_xml () {
+function gs_generate_po_xml () {
   global $wpdb;
 
   $myrows = $wpdb->get_results("
