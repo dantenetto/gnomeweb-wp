@@ -35,6 +35,35 @@ bindtextdomain ('gnomesite', PO_DIR);
 bind_textdomain_codeset ('gnomesite', 'UTF-8');
 textdomain ('gnomesite');
 
+/* Creates wppo auxiliary table when plugin is installed to keep all the
+ * translated xml in an easy accessible format.
+ */
+function wppo_install () {
+  global $wpdb;
+
+  $table_name = $wpdb->prefix . "wppo";
+  
+  if($wpdb->get_var ("SHOW TABLES LIKE '$table_name'") != $table_name) {
+  
+    $sql = "CREATE TABLE IF NOT EXISTS `$table_name` (
+             `wppo_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+             `post_id` bigint(20) unsigned NOT NULL,
+             `lang` varchar(10) NOT NULL,
+             `translated_title` text NOT NULL,
+             `translated_excerpt` text NOT NULL,
+             `translated_name` varchar(200) NOT NULL,
+             `translated_content` longtext NOT NULL,
+             PRIMARY KEY (`wppo_id`),
+             KEY `post_id` (`post_id`)
+           ) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;";
+    
+    require_once (ABSPATH . 'wp-admin/includes/upgrade.php');
+    dbDelta ($sql);
+  }
+}
+register_activation_hook (__FILE__, 'wppo_install');
+
+
 /* This action will be fired when a post/page is updated. It's used to
  * update (regenerate, actually) the pot file with all translatable
  * strings of the gnome.org website. */
