@@ -85,7 +85,4 @@ add_filter('gallery_style', create_function('$a', 'return preg_replace("%
 
 %s", "", $a);'));
 
-
-
-
 ?>
