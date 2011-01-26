@@ -93,6 +93,10 @@ add_action ('post_updated', 'wppo_update_pot_file');
  * a po file. This function needs to take care of creating the translated
  * xml file and separate its content to the wordpress database */
 function wppo_receive_po_file () {
+  global $wpdb;
+  
+  $table_format = array ('%s', '%d', '%s', '%s', '%s'); 
+  
   if ($handle = opendir (PO_DIR)) {
     while (false !== ($po_file = readdir ($handle))) {
     
@@ -105,16 +109,47 @@ function wppo_receive_po_file () {
         /* Arranging the name of the translated xml to something like
          * "gnomesite.pt-br.xml".
          */
-        $translated_xml_file = PO_DIR . 'gnomesite.' . implode ('.', array_pop ($po_file_array)) . '.xml';
+        $lang = implode ('.', array_pop ($po_file_array));
+        $translated_xml_file = PO_DIR . 'gnomesite.' . $lang . '.xml';
         
         exec ("/usr/bin/xml2po -p $po_file -o $translated_xml_file " . POT_FILE);
         
         $translated_xml = file_get_contents ($translated_xml_file);
         
-        /* TODO
-         * We still don't do anything other than generating the translated XML.
-         * We have to store this in a database table, separating the posts.
-         */
+        $dom = new DOMDocument ();
+        $dom->loadXML($translated_xml);
+        
+        $pages = $dom->getElementsByTagName ('page');
+        
+        foreach ($pages as $page) {
+        
+          $page_id    = $page->getElementsByTagName ('id')->item(0)->nodeValue;
+          $page_title = $page->getElementsByTagName ('title')->item(0)->nodeValue;
+          $page_name  = $page->getElementsByTagName ('name')->item(0)->nodeValue;
+          
+          /* This <content> tags probably comes with <html> and </html>
+           * embracing the content itself FIXME
+           */
+          $page_content = $page->getElementsByTagName ('content')->item(0)->nodeValue;
+          
+          $page_array = array ('lang' => $lang,
+                                'post_id' => $page_id,
+                                'translated_title' => $page_title,
+                                'translated_name' => $page_name,
+                                'translated_content' => $page_content);
+          
+          
+          /* Stores in the table the translated version of the page */
+          $wpdb->get_row ("SELECT wppo_id FROM " . $wpdb->prefix . "wppo WHERE post_id = '" . $page_id . "' AND lang = '" . $lang . "'");
+          if($wpdb->num_rows == 0) {
+              $wpdb->insert ($wpdb->prefix . "wppo", $page_array, $table_format);
+          } else {
+              $wpdb->update ($wpdb->prefix . "wppo", $page_array, array ('post_id' => $page_id, 'lang' => $lang), $table_format);
+          }
+          
+        
+        }
+        
       }
     }
   
