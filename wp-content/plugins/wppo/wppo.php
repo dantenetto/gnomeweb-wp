@@ -125,6 +125,7 @@ function wppo_receive_po_file () {
         
           $page_id    = $page->getElementsByTagName ('id')->item(0)->nodeValue;
           $page_title = $page->getElementsByTagName ('title')->item(0)->nodeValue;
+          $page_excerpt = $page->getElementsByTagName ('excerpt')->item(0)->nodeValue;
           $page_name  = $page->getElementsByTagName ('name')->item(0)->nodeValue;
           
           /* This <content> tags probably comes with <html> and </html>
@@ -135,6 +136,7 @@ function wppo_receive_po_file () {
           $page_array = array ('lang' => $lang,
                                 'post_id' => $page_id,
                                 'translated_title' => $page_title,
+                                'translated_excerpt' => $page_excerpt,
                                 'translated_name' => $page_name,
                                 'translated_content' => $page_content);
           

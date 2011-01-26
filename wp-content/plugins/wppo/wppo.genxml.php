@@ -51,6 +51,12 @@ function wppo_generate_po_xml () {
     $page_title_value = $dom->createTextNode($value->post_title);
     $page_title->appendChild($page_title_value);
     $page->appendChild($page_title);
+    
+    // page_excerpt
+    $page_excerpt = $dom->createElement("excerpt");
+    $page_excerpt_value = $dom->createTextNode($value->post_excerpt);
+    $page_excerpt->appendChild($page_excerpt_value);
+    $page->appendChild($page_excerpt);
 
     // page_name
     $page_name = $dom->createElement("name");
