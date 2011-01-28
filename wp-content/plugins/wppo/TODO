@@ -1,0 +1,42 @@
+WPPO plugin TODO
+================
+
+- Replace the_title(), the_content() and the_excerpt() with a custom function
+  to get the correspondent translated version of the text.
+  
+    WordPress doesn't support actions to replace those functions. We should use
+    php's rename_function and override_function functions like this to get
+    the expected result:
+    http://www.php.net/manual/en/function.override-function.php#50821
+
+- Integrate with Damned Lies
+
+    WPPO translation plugin doesn't work alone. Damned lies must be configured
+    to both get the POT file and send translated PO files to the server.
+
+- Create a link to run the existing function that parses the translated PO files
+
+    Right now we have the function that parses the PO files, but there is no
+    configured way to execute it.
+    
+    If Damned lies supports it, we can configure it to run a specific URL and
+    run this function. Otherwise we should create an admin area with the
+    link to the page that does that.
+
+- Search mechanism in WordPress doesn't search for translated pages
+
+    We must tweak search engine in WordPress to search translated content when
+    viewing the website in another language.
+    
+- Pages don't have absolute address
+
+    @MINOR
+
+    This is not a major issue for the user, but it is for search robots[1].
+    Each page should have an absolute path, like http://gnome.org/es/acerca/
+    instead of http://gnome.org/about/?lang=es
+    
+    Also, we should update translated content to point the links to translated
+    pages.
+    
+    [1] http://googlewebmastercentral.blogspot.com/2010/03/working-with-multilingual-websites.html
