@@ -102,6 +102,9 @@ function wppo_receive_po_file () {
     
       /* Gets all the .po files from PO_DIR. Then it will generate a translated
        * XML for each language.
+       *
+       * All the po files must use the following format: "gnomesite.[lang-code].po"
+       *
        */
       if (strpos ($po_file, '.po', 1) !== false && strpos ($po_file, '.pot', 1) === false) {
         $po_file_array = explode ('.', $po_file);
@@ -109,10 +112,10 @@ function wppo_receive_po_file () {
         /* Arranging the name of the translated xml to something like
          * "gnomesite.pt-br.xml".
          */
-        $lang = implode ('.', array_pop ($po_file_array));
+        $lang = $po_file_array[1];
         $translated_xml_file = PO_DIR . 'gnomesite.' . $lang . '.xml';
         
-        exec ("/usr/bin/xml2po -p $po_file -o $translated_xml_file " . POT_FILE);
+        exec ("/usr/bin/xml2po -p $po_file -o $translated_xml_file " . PO_DIR . "gnomesite.xml");
         
         $translated_xml = file_get_contents ($translated_xml_file);
         
