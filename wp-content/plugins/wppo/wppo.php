@@ -60,6 +60,8 @@ function wppo_install () {
     require_once (ABSPATH . 'wp-admin/includes/upgrade.php');
     dbDelta ($sql);
   }
+  
+  wppo_update_pot_file ();
 }
 register_activation_hook (__FILE__, 'wppo_install');
 
@@ -85,6 +87,9 @@ function wppo_update_pot_file ($post) {
     }
   }
   
+  /* This shouldn't be here. FIXME */
+  wppo_receive_po_file ();
+  
 }
 add_action ('post_updated', 'wppo_update_pot_file');
 
@@ -106,7 +111,7 @@ function wppo_receive_po_file () {
        * All the po files must use the following format: "gnomesite.[lang-code].po"
        *
        */
-      if (strpos ($po_file, '.po', 1) !== false && strpos ($po_file, '.pot', 1) === false) {
+      if (strpos ($po_file, '.po') !== false && strpos ($po_file, '.pot') === false) {
         $po_file_array = explode ('.', $po_file);
         
         /* Arranging the name of the translated xml to something like
@@ -115,7 +120,7 @@ function wppo_receive_po_file () {
         $lang = $po_file_array[1];
         $translated_xml_file = PO_DIR . 'gnomesite.' . $lang . '.xml';
         
-        exec ("/usr/bin/xml2po -p $po_file -o $translated_xml_file " . PO_DIR . "gnomesite.xml");
+        exec ("/usr/bin/xml2po -p " . PO_DIR . "$po_file -o $translated_xml_file " . PO_DIR . "gnomesite.xml");
         
         $translated_xml = file_get_contents ($translated_xml_file);
         
@@ -126,15 +131,17 @@ function wppo_receive_po_file () {
         
         foreach ($pages as $page) {
         
-          $page_id    = $page->getElementsByTagName ('id')->item(0)->nodeValue;
-          $page_title = $page->getElementsByTagName ('title')->item(0)->nodeValue;
+          $page_id      = $page->getAttributeNode ('id')->value;
+          $page_title   = $page->getElementsByTagName ('title')->item(0)->nodeValue;
           $page_excerpt = $page->getElementsByTagName ('excerpt')->item(0)->nodeValue;
-          $page_name  = $page->getElementsByTagName ('name')->item(0)->nodeValue;
+          $page_name    = $page->getElementsByTagName ('name')->item(0)->nodeValue;
           
-          /* This <content> tags probably comes with <html> and </html>
-           * embracing the content itself FIXME
-           */
-          $page_content = $page->getElementsByTagName ('content')->item(0)->nodeValue;
+
+          $page_content_elements = $page->getElementsByTagName ('html')->item (0)->childNodes;
+          $page_content = '';
+          foreach ($page_content_elements as $element) {
+            $page_content .= $element->ownerDocument->saveXML ($element);
+          }
           
           $page_array = array ('lang' => $lang,
                                 'post_id' => $page_id,
@@ -153,13 +160,10 @@ function wppo_receive_po_file () {
           }
           
         
-        }
-        
+        }     
       }
     }
-  
   }
-
 }
 
 /* Using gettext to get the translated version of received strings */
