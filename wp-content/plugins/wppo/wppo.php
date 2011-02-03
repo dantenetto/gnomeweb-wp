@@ -29,6 +29,8 @@ require_once ("wppo.genxml.php");
 define (PO_DIR, ABSPATH . "po/");
 define (POT_FILE, PO_DIR . "gnomesite.pot");
 
+$wppo_cache = array();
+
 /* Setting up where compiled po files are located and which translation
  * domain to use. */
 bindtextdomain ('gnomesite', PO_DIR);
@@ -166,7 +168,56 @@ function wppo_receive_po_file () {
   }
 }
 
+
+/* Get all the translated data from the current post */
+function wppo_get_translated_data ($string) {
+  global $post, $wpdb, $wppo_cache;
+  
+  $lang = isset ($_REQUEST['lang']) ? $_REQUEST['lang'] : $_COOKIE['lang'];
+  
+  if (!$lang)
+    return false;
+  
+  if(!isset ($wppo_cache[$post->ID])) {
+    $wppo_cache[$post->ID] = $wpdb->get_row ("SELECT * FROM " . $wpdb->prefix . "wppo WHERE post_id = '" . $post->ID . "' AND lang = '" . $lang . "'", ARRAY_A);
+  }
+  
+  if(isset ($wppo_cache[$post->ID][$string]))
+    return $wppo_cache[$post->ID][$string];
+  else
+    return false;
+}
+
+
+function wppo_get_the_title () {
+  global $post, $wpdb;
+  
+  $title = wppo_get_translated_data ('translated_title');
+  
+  if ($title != false) {
+    return $title;
+  } else {
+    return $post->post_title;
+  }
+  
+}
+
+function wppo_get_the_content () {
+  global $post, $wpdb;
+  
+  $content = wppo_get_translated_data ('translated_content');
+  
+  if ($content != false) {
+    return $content;
+  } else {
+    return wpautop ($post->post_content);
+  }
+  
+}
+
+
 /* Using gettext to get the translated version of received strings */
+/* This function won't be used anymore. FIXME */
 function wppo_get_translated_string ($content) {
   $lang = isset ($_REQUEST['lang']) ? $_REQUEST['lang'] : $_COOKIE['lang'];
   if (!$lang)
