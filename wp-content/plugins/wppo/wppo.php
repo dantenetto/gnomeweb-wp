@@ -74,7 +74,7 @@ register_activation_hook (__FILE__, 'wppo_install');
 function wppo_update_pot_file ($post) {
   $xml_file = PO_DIR . "gnomesite.xml";
   file_put_contents ($xml_file, wppo_generate_po_xml ());
-  exec ("/usr/bin/xml2po -o " . POT_FILE . " $xml_file");
+  exec ("/usr/bin/xml2po -m xhtml -o " . POT_FILE . " $xml_file");
   
   /* Update all the existing po files to handle the modifications in the
    * content using xml2po -u
@@ -84,7 +84,7 @@ function wppo_update_pot_file ($post) {
     
       /* Gets all the .po files from PO_DIR. */
       if (strpos ($po_file, '.po', 1) !== false && strpos ($po_file, '.pot', 1) === false) {
-        exec ("/usr/bin/xml2po -u $po_file $xml_file");
+        exec ("/usr/bin/xml2po -m xhtml -u $po_file $xml_file");
       }
     }
   }
@@ -122,7 +122,7 @@ function wppo_receive_po_file () {
         $lang = $po_file_array[1];
         $translated_xml_file = PO_DIR . 'gnomesite.' . $lang . '.xml';
         
-        exec ("/usr/bin/xml2po -p " . PO_DIR . "$po_file -o $translated_xml_file " . PO_DIR . "gnomesite.xml");
+        exec ("/usr/bin/xml2po -m xhtml -p " . PO_DIR . "$po_file -o $translated_xml_file " . PO_DIR . "gnomesite.xml");
         
         $translated_xml = file_get_contents ($translated_xml_file);
         
