@@ -40,6 +40,7 @@ bindtextdomain ('gnomesite', PO_DIR);
 bind_textdomain_codeset ('gnomesite', 'UTF-8');
 textdomain ('gnomesite');
 
+
 /* Creates wppo auxiliary table when plugin is installed to keep all the
  * translated xml in an easy accessible format.
  */
