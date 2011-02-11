@@ -1,14 +1,6 @@
 WPPO plugin TODO
 ================
 
-- Replace the_title(), the_content() and the_excerpt() with a custom function
-  to get the correspondent translated version of the text.
-  
-    WordPress doesn't support actions to replace those functions. We should use
-    php's rename_function and override_function functions like this to get
-    the expected result:
-    http://www.php.net/manual/en/function.override-function.php#50821
-
 - Integrate with Damned Lies
 
     WPPO translation plugin doesn't work alone. Damned lies must be configured
@@ -27,16 +19,29 @@ WPPO plugin TODO
 
     We must tweak search engine in WordPress to search translated content when
     viewing the website in another language.
+
+- WordPress menus don't show translated titles
+    
+    We must change wordpress functions (or create our own) to get translated
+    titles when generating menus. 
+    
+- Fix XML2PO xhtml mode
+
+    Currently xhtml mode[1] from xml2po don't care about ignoring "src" and "href"
+    params to the translator. We need to fix this if we don't want translators
+    to change URLs.
+    
+    [1] http://git.gnome.org/browse/gnome-doc-utils/tree/xml2po/xml2po/modes/xhtml.py
     
 - Pages don't have absolute address
 
     @MINOR
 
-    This is not a major issue for the user, but it is for search robots[1].
+    This is not a major issue for the user, but it is for search robots[2].
     Each page should have an absolute path, like http://gnome.org/es/acerca/
     instead of http://gnome.org/about/?lang=es
     
     Also, we should update translated content to point the links to translated
     pages.
     
-    [1] http://googlewebmastercentral.blogspot.com/2010/03/working-with-multilingual-websites.html
+    [2] http://googlewebmastercentral.blogspot.com/2010/03/working-with-multilingual-websites.html
