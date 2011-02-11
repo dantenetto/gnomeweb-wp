@@ -40,6 +40,13 @@ bindtextdomain ('gnomesite', PO_DIR);
 bind_textdomain_codeset ('gnomesite', 'UTF-8');
 textdomain ('gnomesite');
 
+/* Forces to use XHTML Doctype, since output from xml2po is xml */
+function wppo_html_type () {
+  return 'application/xhtml+xml';
+}
+add_filter('pre_option_html_type', 'wppo_html_type');
+header("Content-Type: application/xhtml+xml; charset=utf-8");
+
 /* Creates wppo auxiliary table when plugin is installed to keep all the
  * translated xml in an easy accessible format.
  */
