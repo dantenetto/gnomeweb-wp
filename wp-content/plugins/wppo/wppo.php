@@ -66,7 +66,8 @@ function wppo_install () {
     dbDelta ($sql);
   }
   
-  if (!is_dir (PO_DIR)) {
+  if (!is_dir (WPPO_DIR)) {
+    @mkdir (WPPO_DIR, 0777);
     @mkdir (PO_DIR, 0777);
     @mkdir (POT_DIR, 0777);
     @mkdir (XML_DIR, 0777);
