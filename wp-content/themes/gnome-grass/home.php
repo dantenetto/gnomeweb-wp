@@ -42,8 +42,8 @@ require_once("header.php"); ?>
                         
                         <div class="grid_6 omega">
                             <a href="<?php the_permalink(); ?>">
-                                <strong><?php the_title(); ?></strong><br />
-                                <?php echo strip_tags(get_the_excerpt()); ?>
+                                <strong><?php echo wppo_get_the_title(); ?></strong><br />
+                                <?php echo strip_tags(wppo_get_the_excerpt()); ?>
                             </a>
                         </div>
                         <div class="clear"></div>

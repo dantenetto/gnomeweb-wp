@@ -11,7 +11,7 @@ require_once("header.php"); ?>
         <div class="container_12">
         
             <div class="page_title with_subpages_list">
-                <h1><?php the_title(); ?></h1>
+                <h1><?php echo wppo_get_the_title(); ?></h1>
                 
                 <ul class="subpages_list">
                     <?php
@@ -39,7 +39,7 @@ require_once("header.php"); ?>
             
             <div class="content without_sidebar">
             <?php while ( have_posts() ) : the_post(); ?>
-                <?php the_content(); ?>
+                <?php echo wppo_get_the_content(); ?>
             <?php endwhile; // End the loop. Whew. ?>
                 <br />
                 <div class="clear"></div>

@@ -21,12 +21,12 @@ require_once("header.php"); ?>
 	                echo 'noicon';
                 }
                 ?>
-                <?php the_title(); ?></h1>
+                <?php echo wppo_get_the_title(); ?></h1>
             </div>
             
             <div class="content">
             <?php while ( have_posts() ) : the_post(); ?>
-                <?php the_content(); ?>
+                <?php echo wppo_get_the_content(); ?>
             <?php endwhile; // End the loop. Whew. ?>
                 <br />
                 <div class="clear"></div>

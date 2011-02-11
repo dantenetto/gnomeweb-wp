@@ -18,8 +18,8 @@ require_once("header.php"); ?>
                 <div class="content">
                     <dl>
                     <?php while ( have_posts() ) : the_post(); ?>
-                        <dt><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></dt>
-                        <dd><?php the_excerpt(); ?></dd>
+                        <dt><a href="<?php the_permalink(); ?>"><?php echo wppo_get_the_title(); ?></a></dt>
+                        <dd><?php echo wppo_get_the_excerpt(); ?></dd>
                     <?php endwhile; // End the loop. Whew. ?>
                     </dl>
                     
