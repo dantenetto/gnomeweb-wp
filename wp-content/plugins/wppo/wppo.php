@@ -180,17 +180,49 @@ function wppo_receive_po_file () {
 }
 
 
+
+function wppo_get_lang () {
+  
+  if(isset ($_REQUEST['lang'])) {
+    $lang = $_REQUEST['lang'];
+  } elseif (isset ($_SESSION['lang'])) {
+    $lang = $_SESSION['lang'];
+  } else {
+  
+    $user_lang = explode (',', $_SERVER["HTTP_ACCEPT_LANGUAGE"]);
+    foreach($user_lang as $k => $value) {
+      $user_lang[$k] = explode(';', $value);
+      $user_lang[$k] = str_replace('-', '_', $user_lang[$k][0]);
+    }
+    
+    /* FIXME
+     * Before this, we need to check if the user language exists,
+     * and if not, try the following languages.
+     */
+    $lang = $user_lang[0];
+  }
+  
+  return $lang;
+  
+}
+
+
 /* Get all the translated data from the current post */
 function wppo_get_translated_data ($string) {
   global $post, $wpdb, $wppo_cache;
   
-  $lang = isset ($_REQUEST['lang']) ? $_REQUEST['lang'] : $_COOKIE['lang'];
+  $lang = wppo_get_lang ();
   
-  if (!$lang)
-    return false;
+  if(strpos ($lang, '_') !== false) {
+    $fallback_lang = explode ('_', $lang);
+    $fallback_lang = $fallback_lang[0];
+  } else {
+    $fallback_lang = $lang;
+  }
+  
   
   if(!isset ($wppo_cache[$post->ID])) {
-    $wppo_cache[$post->ID] = $wpdb->get_row ("SELECT * FROM " . $wpdb->prefix . "wppo WHERE post_id = '" . $post->ID . "' AND lang = '" . $lang . "'", ARRAY_A);
+    $wppo_cache[$post->ID] = $wpdb->get_row ("SELECT * FROM " . $wpdb->prefix . "wppo WHERE post_id = '" . $post->ID . "' AND (lang = '" . $lang . "' OR lang = '" . $fallback_lang . "')", ARRAY_A);
   }
   
   if(isset ($wppo_cache[$post->ID][$string]))
