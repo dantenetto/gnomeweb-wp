@@ -26,8 +26,11 @@ License: AGPLv3
 
 require_once ("wppo.genxml.php");
 
-define (PO_DIR, ABSPATH . "po/");
-define (POT_FILE, PO_DIR . "gnomesite.pot");
+define (WPPO_DIR, ABSPATH . "wppo/");
+define (PO_DIR, WPPO_DIR . "po/");
+define (POT_DIR, WPPO_DIR . "pot/");
+define (POT_FILE, POT_DIR . "gnomesite.pot");
+define (XML_DIR, WPPO_DIR . "xml/");
 
 $wppo_cache = array();
 
@@ -63,6 +66,12 @@ function wppo_install () {
     dbDelta ($sql);
   }
   
+  if (!is_dir (PO_DIR)) {
+    @mkdir (PO_DIR, 0777);
+    @mkdir (POT_DIR, 0777);
+    @mkdir (XML_DIR, 0777);
+  }
+  
   wppo_update_pot_file ();
 }
 register_activation_hook (__FILE__, 'wppo_install');
@@ -72,7 +81,7 @@ register_activation_hook (__FILE__, 'wppo_install');
  * update (regenerate, actually) the pot file with all translatable
  * strings of the gnome.org website. */
 function wppo_update_pot_file ($post) {
-  $xml_file = PO_DIR . "gnomesite.xml";
+  $xml_file = XML_DIR . "gnomesite.xml";
   file_put_contents ($xml_file, wppo_generate_po_xml ());
   exec ("/usr/bin/xml2po -m xhtml -o " . POT_FILE . " $xml_file");
   
@@ -84,7 +93,7 @@ function wppo_update_pot_file ($post) {
     
       /* Gets all the .po files from PO_DIR. */
       if (strpos ($po_file, '.po', 1) !== false && strpos ($po_file, '.pot', 1) === false) {
-        exec ("/usr/bin/xml2po -m xhtml -u $po_file $xml_file");
+        exec ("/usr/bin/xml2po -m xhtml -u " . PO_DIR . " $po_file $xml_file");
       }
     }
   }
@@ -120,9 +129,9 @@ function wppo_receive_po_file () {
          * "gnomesite.pt-br.xml".
          */
         $lang = $po_file_array[1];
-        $translated_xml_file = PO_DIR . 'gnomesite.' . $lang . '.xml';
+        $translated_xml_file = XML_DIR . 'gnomesite.' . $lang . '.xml';
         
-        exec ("/usr/bin/xml2po -m xhtml -p " . PO_DIR . "$po_file -o $translated_xml_file " . PO_DIR . "gnomesite.xml");
+        exec ("/usr/bin/xml2po -m xhtml -p " . PO_DIR . "$po_file -o $translated_xml_file " . XML_DIR . "gnomesite.xml");
         
         $translated_xml = file_get_contents ($translated_xml_file);
         
