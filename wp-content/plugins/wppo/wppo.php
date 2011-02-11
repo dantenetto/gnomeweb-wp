@@ -231,42 +231,42 @@ function wppo_get_the_content () {
 
 /* Using gettext to get the translated version of received strings */
 /* This function won't be used anymore. FIXME */
-function wppo_get_translated_string ($content) {
-  $lang = isset ($_REQUEST['lang']) ? $_REQUEST['lang'] : $_COOKIE['lang'];
-  if (!$lang)
-    return $content;
-
-  setlocale (LC_MESSAGES, $lang);
-
-  /* If there's a new line in the content, we use wpautop() function,
-   * because the script that generates the xml with translatable strings
-   * has to call it otherwise we'll lose paragraphs inserted by the
-   * user. */
-  if (stristr ($content, "\n") === FALSE)
-    return gettext ($content);
-  else
-    $content = wpautop ($content);
-
-  /* Parsing the content to split up <p> tags */
-  $newct = '';
-  $parser = xml_parser_create ();
-  xml_parse_into_struct ($parser, "<r>$content</r>", $vals, $index);
-  foreach ((array) $index['P'] as $p)
-    $newct .= "<p>" . gettext ($vals[$p]['value']) . "</p>\n";
-  xml_parser_free ($parser);
-  return $newct;
-}
-add_filter ('the_title', 'wppo_get_translated_string', 1);
-add_filter ('the_content', 'wppo_get_translated_string', 1);
-
-/* Saving the language code choosen by the user */
-if (isset ($_REQUEST['lang']))
-  setcookie ("lang", $_REQUEST['lang'], time () + 36000, "/");
-
-/* A nice url to show the pot file */
-if (isset ($_REQUEST['pot'])) {
-  header ("Content-Type: text/plain");
-  die (file_get_contents (PO_DIR . "gnomesite.pot"));
-}
+//function wppo_get_translated_string ($content) {
+//  $lang = isset ($_REQUEST['lang']) ? $_REQUEST['lang'] : $_COOKIE['lang'];
+//  if (!$lang)
+//    return $content;
+//
+//  setlocale (LC_MESSAGES, $lang);
+//
+//  /* If there's a new line in the content, we use wpautop() function,
+//   * because the script that generates the xml with translatable strings
+//   * has to call it otherwise we'll lose paragraphs inserted by the
+//   * user. */
+//  if (stristr ($content, "\n") === FALSE)
+//    return gettext ($content);
+//  else
+//    $content = wpautop ($content);
+//
+//  /* Parsing the content to split up <p> tags */
+//  $newct = '';
+//  $parser = xml_parser_create ();
+//  xml_parse_into_struct ($parser, "<r>$content</r>", $vals, $index);
+//  foreach ((array) $index['P'] as $p)
+//    $newct .= "<p>" . gettext ($vals[$p]['value']) . "</p>\n";
+//  xml_parser_free ($parser);
+//  return $newct;
+//}
+//add_filter ('the_title', 'wppo_get_translated_string', 1);
+//add_filter ('the_content', 'wppo_get_translated_string', 1);
+//
+///* Saving the language code choosen by the user */
+//if (isset ($_REQUEST['lang']))
+//  setcookie ("lang", $_REQUEST['lang'], time () + 36000, "/");
+//
+///* A nice url to show the pot file */
+//if (isset ($_REQUEST['pot'])) {
+//  header ("Content-Type: text/plain");
+//  die (file_get_contents (PO_DIR . "gnomesite.pot"));
+//}
 
 ?>
