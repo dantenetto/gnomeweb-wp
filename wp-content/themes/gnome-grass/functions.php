@@ -72,10 +72,23 @@ function create_post_type() {
 }
 
 
-// WPML specific constants do ignore custom css
+if (!function_exists ('wppo_get_the_title')) {
+    function wppo_get_the_title () {
+        return get_the_title ();
+    }
+}
 
-define('ICL_DONT_LOAD_NAVIGATION_CSS', true);
-define('ICL_DONT_LOAD_LANGUAGE_SELECTOR_CSS', true);
+if (!function_exists ('wppo_get_the_excerpt')) {
+    function wppo_get_the_excerpt () {
+        return get_the_excerpt ();
+    }
+}
+
+if (!function_exists ('wppo_get_the_content')) {
+    function wppo_get_the_content () {
+        return get_the_content ();
+    }
+}
 
 
 // Beautify [galery] shortcode

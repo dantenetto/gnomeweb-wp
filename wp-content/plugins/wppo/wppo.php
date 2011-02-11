@@ -202,6 +202,19 @@ function wppo_get_the_title () {
   
 }
 
+function wppo_get_the_excerpt () {
+  global $post, $wpdb;
+  
+  $content = wppo_get_translated_data ('translated_excerpt');
+  
+  if ($content != false) {
+    return $content;
+  } else {
+    return $post->post_excerpt;
+  }
+  
+}
+
 function wppo_get_the_content () {
   global $post, $wpdb;
   
