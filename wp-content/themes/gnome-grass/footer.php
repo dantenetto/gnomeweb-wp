@@ -15,51 +15,11 @@
                 wp_nav_menu('menu=footer-5');
                 ?>
             </div>
-            <div class="links grid_3 right">
-                <?php /* <div>
-                    <strong>Also available in:</strong>
-                    <a href="#">Español</a>
-                    <a href="#">Français</a>
-                    <a href="#">Deutsch</a>
-                    <a href="#">Italiano</a>
-                    <a href="#">Português</a>
-                    <a href="#">中文 (Chinese)</a>
-                    <a href="#">More...</a>
+            <div class="language grid_3">
+                <div>
+                    <strong><?php _e( 'This website is available in many languages', 'grass' ); ?></strong><br />
+                    <a href="#FIXME" class="map"><img src="<?php bloginfo('stylesheet_directory'); ?>/images/footer-map.png" alt="<?php _e( 'Switch Language', 'grass' ); ?>" title="<?php _e( 'Switch Language', 'grass' ); ?>" /></a>
                 </div>
-                */ ?>
-                <?php
-                
-                if(function_exists('icl_get_languages')) {
-                
-                    $languages = icl_get_languages('skip_missing=0&orderby=code');
-                    
-                    echo '<div><ul class="menu available_languages">';
-                    
-                    if(count($languages) > 0) {
-                        echo '<li><strong>';
-                        echo _e('Also available in:', 'grass');
-                        echo '</strong><ul class="sub-menu">';
-                    }
-                    
-                    foreach($languages as $key => $value) {
-                        if($value['active'] == true) {
-                            echo '<li class="active"><a href="'.$value['url'].'" title="'.$value['translated_name'].'">'.$value['native_name'].'</a></li>';
-                        } else {
-                            echo '<li><a href="'.$value['url'].'" title="'.$value['translated_name'].'">'.$value['native_name'].'</a></li>';
-                        }
-                    }
-                    
-                    echo '</ul></li></ul></div>';
-                    
-                    /*
-                     * If the number of available languages get bigger,
-                     * we'll have to put a "more..." link here.
-                     *
-                     */
-                    
-                }
-                
-                ?>
             </div>
             
             <!-- footnotes -->
