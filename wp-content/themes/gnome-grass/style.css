@@ -755,7 +755,7 @@ dl.icon_list dt img {
 }
 #footer div.links div {
     float: left;
-    margin-right: 20px;
+    margin: 0 20px 10px 0;
 }
 #footer div.links div a, #footer div.links div strong {
     display: block;
@@ -791,16 +791,11 @@ dl.icon_list dt img {
 #footer ul.menu > li > a {
     font-weight: bold;
 }
-#footer a {
+#footer .links a {
     color: inherit;
     -webkit-transition: background-color 100ms ease-in;
 }
-#footer .available_languages li.active {
-    background: url(images/selected-language.png) no-repeat right center;
-    margin-right: -10px;
-    padding-right: 10px;
-}
-#footer a:focus {
+#footer .links a:focus {
    background: #ececec;
    padding: 1px 3px;
    margin: -1px -3px;
@@ -815,4 +810,55 @@ dl.icon_list dt img {
 }
 #footer #footnotes small {
     font-size: 80%;
+}
+
+
+/* Language Selector */
+/* ========================================================================== */
+
+
+#language_selector {
+    display: none;
+    /* poor wanda the fish */
+    background: #555753 url(images/language-selector-bg.png) top center repeat-x;
+    clear: left;
+    overflow: hidden;
+}
+#language_selector .container_12 {
+    background: url(images/language-selector-wanda-bg.png) 60px right no-repeat;
+    overflow: hidden;
+}
+#language_selector h3 {
+    color: #f57900;
+    margin: 60px 0 35px;
+}
+#language_selector ul {
+    list-style: none;
+    -moz-column-count: 4;
+    -webkit-column-count: 4;
+    column-count: 4;
+    margin: 10px 0 40px;
+    color: #fff;
+}
+#language_selector ul li {
+    margin: 0;
+    padding: 0;
+    margin: 0 0 7px;
+}
+#language_selector ul li.active {
+    font-weight: bold;
+}
+#language_selector ul a {
+    color: #fff;
+    text-decoration: none;
+}
+#language_selector ul a:hover {
+    text-decoration: underline;
+}
+#language_selector .help_us_translating {
+    color: #d3d7cf;
+    margin-top: 118px;
+}
+#language_selector .help_us_translating a {
+    color: #fff;
 }
