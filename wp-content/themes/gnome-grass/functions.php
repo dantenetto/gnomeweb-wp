@@ -72,25 +72,6 @@ function create_post_type() {
 }
 
 
-if (!function_exists ('wppo_get_the_title')) {
-    function wppo_get_the_title () {
-        return get_the_title ();
-    }
-}
-
-if (!function_exists ('wppo_get_the_excerpt')) {
-    function wppo_get_the_excerpt () {
-        return get_the_excerpt ();
-    }
-}
-
-if (!function_exists ('wppo_get_the_content')) {
-    function wppo_get_the_content () {
-        return get_the_content ();
-    }
-}
-
-
 // Beautify [galery] shortcode
 
 add_filter('gallery_style', create_function('$a', 'return preg_replace("%

@@ -18,9 +18,9 @@ require_once("header.php"); ?>
             <?php while ( have_posts() ) : the_post(); ?>
                 <div class="news_title">
                     <p class="date"><?php the_date(); ?></p>
-                    <h1><?php echo wppo_get_the_title(); ?></h1>
+                    <h1><?php the_title(); ?></h1>
                 </div>
-                <?php echo wppo_get_the_content(); ?>
+                <?php the_content(); ?>
             <?php endwhile; // End the loop. Whew. ?>
                 <br />
                 <div class="clear"></div>

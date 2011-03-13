@@ -24,13 +24,26 @@ License: AGPLv3
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+if(!function_exists ('_log')) {
+  function _log ( $message ) {
+    if(WP_DEBUG === true) {
+      if( is_array($message) || is_object ($message) ){
+        file_put_contents (ABSPATH.'debug.log', print_r ($message, true)."\n", FILE_APPEND);
+      } else {
+        file_put_contents (ABSPATH.'debug.log', $message."\n" , FILE_APPEND);
+      }
+    }
+  }
+}
+
+
 require_once ("wppo.genxml.php");
 
-define (WPPO_DIR, ABSPATH . "wppo/");
-define (PO_DIR, WPPO_DIR . "po/");
-define (POT_DIR, WPPO_DIR . "pot/");
-define (POT_FILE, POT_DIR . "gnomesite.pot");
-define (XML_DIR, WPPO_DIR . "xml/");
+define ('WPPO_DIR', ABSPATH . "wppo/");
+define ('PO_DIR', WPPO_DIR . "po/");
+define ('POT_DIR', WPPO_DIR . "pot/");
+define ('POT_FILE', POT_DIR . "gnomesite.pot");
+define ('XML_DIR', WPPO_DIR . "xml/");
 
 $wppo_cache = array();
 
@@ -39,6 +52,7 @@ $wppo_cache = array();
 bindtextdomain ('gnomesite', PO_DIR);
 bind_textdomain_codeset ('gnomesite', 'UTF-8');
 textdomain ('gnomesite');
+add_filter ('get_pages', 'wppo_filter_get_pages', 1);
 
 
 /* Creates wppo auxiliary table when plugin is installed to keep all the
@@ -68,21 +82,83 @@ function wppo_install () {
   }
   
   if (!is_dir (WPPO_DIR)) {
-    @mkdir (WPPO_DIR, 0777);
-    @mkdir (PO_DIR, 0777);
-    @mkdir (POT_DIR, 0777);
-    @mkdir (XML_DIR, 0777);
-  }
-  
+    mkdir (WPPO_DIR, 0777);
+    mkdir (PO_DIR, 0777);
+    mkdir (POT_DIR, 0777);
+    mkdir (XML_DIR, 0777);
+  }  
   wppo_update_pot_file ();
 }
 register_activation_hook (__FILE__, 'wppo_install');
 
 
+add_filter ('the_title', function($title, $id) {
+  global $wppo_cache;
+  
+  $translated_title = trim (wppo_get_translated_data ('translated_title', $id));
+  
+  if(empty ($translated_title)) {
+    return $title;
+  } else {
+    return $translated_title;
+  }
+}, 10, 2);
+
+add_filter ('the_content', function($content) {
+  global $wppo_cache, $post;
+
+  if(isset($wppo_cache[$post->ID])) {
+      $translated_content = $wppo_cache[$post->ID]['translated_content'];
+  } else {
+      $translated_content = trim (wppo_get_translated_data ('translated_content', $post->ID));
+  }
+  
+  if(empty ($translated_content)) {
+    return $content;
+  } else {
+    return $translated_content;
+  }
+}, 10, 1);
+
+
+
+function wppo_filter_get_pages ($pages) {
+    global $wppo_cache, $wpdb;
+
+    $lang = wppo_get_lang ();
+    if(strpos ($lang, '_') !== false) {
+      $fallback_lang = explode ('_', $lang);
+      $fallback_lang = $fallback_lang[0];
+    } else {
+      $fallback_lang = $lang;
+    }
+
+    foreach($pages as $page)
+    {
+        if(!isset ($wppo_cache[$page->ID])) {
+          $wppo_cache[$page->ID] = $wpdb->get_row ("SELECT * FROM " . $wpdb->prefix . "wppo WHERE post_id = '" . $page->ID . "' AND (lang = '" . $lang . "' OR lang = '" . $fallback_lang . "')", ARRAY_A);
+        }
+
+        if(is_array($wppo_cache[$page->ID])) {
+          $page->post_title   = $wppo_cache[$page->ID]['translated_title'];
+          $page->post_name    = $wppo_cache[$page->ID]['translated_name'];
+          $page->post_content = $wppo_cache[$page->ID]['translated_content'];
+          $page->post_excerpt = $wppo_cache[$page->ID]['translated_excerpt'];
+        }
+
+        
+        
+    }
+
+    //_log($pages);
+    return $pages;
+}
+
 /* This action will be fired when a post/page is updated. It's used to
  * update (regenerate, actually) the pot file with all translatable
  * strings of the gnome.org website. */
 function wppo_update_pot_file ($post) {
+
   $xml_file = XML_DIR . "gnomesite.xml";
   file_put_contents ($xml_file, wppo_generate_po_xml ());
   exec ("/usr/bin/xml2po -m xhtml -o " . POT_FILE . " $xml_file");
@@ -101,10 +177,11 @@ function wppo_update_pot_file ($post) {
   }
   
   /* This shouldn't be here. FIXME */
-  wppo_receive_po_file ();
-  
+  //wppo_receive_po_file ();
+
 }
 add_action ('post_updated', 'wppo_update_pot_file');
+add_action ('post_updated', 'wppo_receive_po_file');
 
 
 /* this action will be fired when damned lies system send an updated version of
@@ -112,13 +189,13 @@ add_action ('post_updated', 'wppo_update_pot_file');
  * xml file and separate its content to the wordpress database */
 function wppo_receive_po_file () {
   global $wpdb;
-  
-  $table_format = array ('%s', '%d', '%s', '%s', '%s'); 
+      
+  $table_format = array ('%s', '%d', '%s', '%s', '%s');
   
   if ($handle = opendir (PO_DIR)) {
     while (false !== ($po_file = readdir ($handle))) {
-    
-      /* Gets all the .po files from PO_DIR. Then it will generate a translated
+      
+        /* Gets all the .po files from PO_DIR. Then it will generate a translated
        * XML for each language.
        *
        * All the po files must use the following format: "gnomesite.[lang-code].po"
@@ -132,11 +209,10 @@ function wppo_receive_po_file () {
          */
         $lang = $po_file_array[1];
         $translated_xml_file = XML_DIR . 'gnomesite.' . $lang . '.xml';
-        
-        exec ("/usr/bin/xml2po -m xhtml -p " . PO_DIR . "$po_file -o $translated_xml_file " . XML_DIR . "gnomesite.xml");
-        
+        $cmd = "/usr/bin/xml2po -m xhtml -p " . PO_DIR . "$po_file -o $translated_xml_file " . XML_DIR . "gnomesite.xml";
+        $out = exec ($cmd);
+
         $translated_xml = file_get_contents ($translated_xml_file);
-        
         $dom = new DOMDocument ();
         $dom->loadXML($translated_xml);
         
@@ -162,7 +238,7 @@ function wppo_receive_po_file () {
                                 'translated_excerpt' => $page_excerpt,
                                 'translated_name' => $page_name,
                                 'translated_content' => $page_content);
-          
+
           
           /* Stores in the table the translated version of the page */
           $wpdb->get_row ("SELECT wppo_id FROM " . $wpdb->prefix . "wppo WHERE post_id = '" . $page_id . "' AND lang = '" . $lang . "'");
@@ -208,10 +284,19 @@ function wppo_get_lang () {
 
 
 /* Get all the translated data from the current post */
-function wppo_get_translated_data ($string) {
+function wppo_get_translated_data ($string, $id = null) {
   global $post, $wpdb, $wppo_cache;
   
   $lang = wppo_get_lang ();
+
+  if($id !== null)
+  {
+      $p = &get_post($id);
+  }
+  else
+  {
+      $p = $post;
+  }
   
   if(strpos ($lang, '_') !== false) {
     $fallback_lang = explode ('_', $lang);
@@ -219,57 +304,25 @@ function wppo_get_translated_data ($string) {
   } else {
     $fallback_lang = $lang;
   }
+
   
   
-  if(!isset ($wppo_cache[$post->ID])) {
-    $wppo_cache[$post->ID] = $wpdb->get_row ("SELECT * FROM " . $wpdb->prefix . "wppo WHERE post_id = '" . $post->ID . "' AND (lang = '" . $lang . "' OR lang = '" . $fallback_lang . "')", ARRAY_A);
+  if(!isset ($wppo_cache[$p->ID])) {
+    $wppo_cache[$p->ID] = $wpdb->get_row ("SELECT * FROM " . $wpdb->prefix . "wppo WHERE post_id = '" . $p->ID . "' AND (lang = '" . $lang . "' OR lang = '" . $fallback_lang . "')", ARRAY_A);
   }
   
-  if(isset ($wppo_cache[$post->ID][$string]))
-    return $wppo_cache[$post->ID][$string];
-  else
-    return false;
-}
-
-
-function wppo_get_the_title () {
-  global $post, $wpdb;
-  
-  $title = wppo_get_translated_data ('translated_title');
-  
-  if ($title != false) {
-    return $title;
+  if(isset ($wppo_cache[$p->ID][$string]) && $fallback_lang != "en") {
+    return $wppo_cache[$p->ID][$string];
   } else {
-    return $post->post_title;
+    if($string == 'translated_content') {
+      return wpautop ($p->post_content);
+    } else {
+      return $p->{str_replace("translated_", "post_", $string)};
+    }
   }
-  
 }
 
-function wppo_get_the_excerpt () {
-  global $post, $wpdb;
-  
-  $content = wppo_get_translated_data ('translated_excerpt');
-  
-  if ($content != false) {
-    return $content;
-  } else {
-    return $post->post_excerpt;
-  }
-  
-}
 
-function wppo_get_the_content () {
-  global $post, $wpdb;
-  
-  $content = wppo_get_translated_data ('translated_content');
-  
-  if ($content != false) {
-    return $content;
-  } else {
-    return wpautop ($post->post_content);
-  }
-  
-}
 
 
 /* Using gettext to get the translated version of received strings */
