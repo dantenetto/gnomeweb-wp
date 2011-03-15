@@ -162,22 +162,6 @@ function wppo_update_pot_file ($post) {
   $xml_file = XML_DIR . "gnomesite.xml";
   file_put_contents ($xml_file, wppo_generate_po_xml ());
   exec ("/usr/bin/xml2po -m xhtml -o " . POT_FILE . " $xml_file");
-  
-  /* Update all the existing po files to handle the modifications in the
-   * content using xml2po -u
-   */
-  if ($handle = opendir (PO_DIR)) {
-    while (false !== ($po_file = readdir ($handle))) {
-    
-      /* Gets all the .po files from PO_DIR. */
-      if (strpos ($po_file, '.po', 1) !== false && strpos ($po_file, '.pot', 1) === false) {
-        exec ("/usr/bin/xml2po -m xhtml -u " . PO_DIR . " $po_file $xml_file");
-      }
-    }
-  }
-  
-  /* This shouldn't be here. FIXME */
-  //wppo_receive_po_file ();
 
 }
 add_action ('post_updated', 'wppo_update_pot_file');
