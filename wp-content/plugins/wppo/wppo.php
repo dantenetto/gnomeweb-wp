@@ -61,9 +61,11 @@ add_filter ('get_pages', 'wppo_filter_get_pages', 1);
 function wppo_install () {
   global $wpdb;
 
-  $table_name = $wpdb->prefix . "wppo";
+  require_once (ABSPATH . 'wp-admin/includes/upgrade.php');
+
+  $table_name = $wpdb->prefix . "wppo_posts";
   
-  if($wpdb->get_var ("SHOW TABLES LIKE '$table_name'") != $table_name) {
+  if ($wpdb->get_var ("SHOW TABLES LIKE '$table_name'") != $table_name) {
   
     $sql = "CREATE TABLE IF NOT EXISTS `$table_name` (
              `wppo_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
@@ -77,8 +79,22 @@ function wppo_install () {
              KEY `post_id` (`post_id`)
            ) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;";
     
-    require_once (ABSPATH . 'wp-admin/includes/upgrade.php');
+    
     dbDelta ($sql);
+  }
+  
+  $table_name = $wpdb->prefix . "wppo_lang";
+  
+  if ($wpdb->get_var ("SHOW TABLES LIKE '$table_name'") != $table_name) {
+  
+    $sql = "CREATE TABLE IF NOT EXISTS `$table_name` (
+          `lang` VARCHAR( 10 ) NOT NULL ,
+          `lang_name` VARCHAR( 100 ) NOT NULL ,
+          `lang_status` SET(  'publish',  'hidden' ) NOT NULL DEFAULT  'hidden',
+          PRIMARY KEY (  `lang` )
+          ) ENGINE = MYISAM ;";
+          
+     dbDelta ($sql);
   }
   
   if (!is_dir (WPPO_DIR)) {
@@ -136,7 +152,7 @@ function wppo_filter_get_pages ($pages) {
     foreach($pages as $page)
     {
         if(!isset ($wppo_cache[$page->ID])) {
-          $wppo_cache[$page->ID] = $wpdb->get_row ("SELECT * FROM " . $wpdb->prefix . "wppo WHERE post_id = '" . $page->ID . "' AND (lang = '" . $lang . "' OR lang = '" . $fallback_lang . "')", ARRAY_A);
+          $wppo_cache[$page->ID] = $wpdb->get_row ("SELECT * FROM " . $wpdb->prefix . "wppo_posts WHERE post_id = '" . $page->ID . "' AND (lang = '" . $lang . "' OR lang = '" . $fallback_lang . "')", ARRAY_A);
         }
 
         if(is_array($wppo_cache[$page->ID])) {
@@ -196,6 +212,11 @@ function wppo_receive_po_file () {
         $cmd = "/usr/bin/xml2po -m xhtml -p " . PO_DIR . "$po_file -o $translated_xml_file " . XML_DIR . "gnomesite.xml";
         $out = exec ($cmd);
 
+        $wpdb->get_row ("SELECT lang FROM " . $wpdb->prefix . "wppo_lang WHERE lang = '" . $lang . "'");
+        if ($wpdb->num_rows == 0) {
+          $wpdb->insert ($wpdb->prefix . "wppo_lang", array ('lang' => $lang, 'lang_name' => $lang), array('%s', '%s'));
+        }
+        
         $translated_xml = file_get_contents ($translated_xml_file);
         $dom = new DOMDocument ();
         $dom->loadXML($translated_xml);
@@ -225,15 +246,14 @@ function wppo_receive_po_file () {
 
           
           /* Stores in the table the translated version of the page */
-          $wpdb->get_row ("SELECT wppo_id FROM " . $wpdb->prefix . "wppo WHERE post_id = '" . $page_id . "' AND lang = '" . $lang . "'");
-          if($wpdb->num_rows == 0) {
-              $wpdb->insert ($wpdb->prefix . "wppo", $page_array, $table_format);
+          $wpdb->get_row ("SELECT wppo_id FROM " . $wpdb->prefix . "wppo_posts WHERE post_id = '" . $page_id . "' AND lang = '" . $lang . "'");
+          if ($wpdb->num_rows == 0) {
+              $wpdb->insert ($wpdb->prefix . "wppo_posts", $page_array, $table_format);
           } else {
-              $wpdb->update ($wpdb->prefix . "wppo", $page_array, array ('post_id' => $page_id, 'lang' => $lang), $table_format);
+              $wpdb->update ($wpdb->prefix . "wppo_posts", $page_array, array ('post_id' => $page_id, 'lang' => $lang), $table_format);
           }
-          
-        
-        }     
+                  
+        }
       }
     }
   }
@@ -292,7 +312,7 @@ function wppo_get_translated_data ($string, $id = null) {
   
   
   if(!isset ($wppo_cache[$p->ID])) {
-    $wppo_cache[$p->ID] = $wpdb->get_row ("SELECT * FROM " . $wpdb->prefix . "wppo WHERE post_id = '" . $p->ID . "' AND (lang = '" . $lang . "' OR lang = '" . $fallback_lang . "')", ARRAY_A);
+    $wppo_cache[$p->ID] = $wpdb->get_row ("SELECT * FROM " . $wpdb->prefix . "wppo_posts WHERE post_id = '" . $p->ID . "' AND (lang = '" . $lang . "' OR lang = '" . $fallback_lang . "')", ARRAY_A);
   }
   
   if(isset ($wppo_cache[$p->ID][$string]) && $fallback_lang != "en") {
