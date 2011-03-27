@@ -6,6 +6,8 @@ WPPO plugin TODO
     According to the discussion in i18n-coordination-list, it was agreed to use
     separated files for translations from pages and from news.
     
+    (Maybe in the plugin admin area could have some option regarding this)
+    
 
 - Integrate with Damned Lies
 
