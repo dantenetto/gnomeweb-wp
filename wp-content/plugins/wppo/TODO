@@ -1,19 +1,21 @@
 WPPO plugin TODO
 ================
 
+- Separate POT files from pages and from news
+
+    According to the discussion in i18n-coordination-list, it was agreed to use
+    separated files for translations from pages and from news.
+    
+
 - Integrate with Damned Lies
 
     WPPO translation plugin doesn't work alone. Damned lies must be configured
-    to both get the POT file and send translated PO files to the server.
+    to download POT files via HTTP.
 
-- Create a link to run the existing function that parses the translated PO files
+- Create an admin page with update actions
 
-    Right now we have the function that parses the PO files, but there is no
-    configured way to execute it.
-    
-    If Damned lies supports it, we can configure it to run a specific URL and
-    run this function. Otherwise we should create an admin area with the
-    link to the page that does that.
+    We must offer an option in the admin with a call to the function that parses
+    the new PO files.
 
 - Search mechanism in WordPress doesn't search for translated pages
 
@@ -31,14 +33,6 @@ WPPO plugin TODO
     
     [1] http://git.gnome.org/browse/gnome-doc-utils/tree/xml2po/xml2po/modes/xhtml.py
     
-- Custom menus aren't translatable
-    
-    Custom links in menus aren't translatable. These items are stored in the
-    wp_posts table under "nav_menu_item" post_type, which are skiped by the
-    WPPO function that selects what content will have translations.
-    
-    After allowing those items to be translated, a filter needs to be created 
-    somehow to apply the translation to these custom links.
     
 - Store all the available languages
 
@@ -46,7 +40,7 @@ WPPO plugin TODO
     discover what are the available languages, and how much is the PO file 
     of each language translated.
     
-    WPPO should have an admin are with these stats.
+    WPPO should have an admin area with these stats.
 
 
 - Pages don't have absolute address
